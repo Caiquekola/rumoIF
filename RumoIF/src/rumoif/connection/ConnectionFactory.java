@@ -4,11 +4,12 @@ import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+
 public class ConnectionFactory {
 
-    private static final String DRIVE = "org.postgresql.driver";
-    private static final String URL = "jdbc:postgresql://localhost:5432/";
-    private static final String USER = "postgre";
+    private static final String DRIVE = "org.postgresql.Driver";
+    private static final String URL = "jdbc:postgresql://localhost:5432/rumoIF";
+    private static final String USER = "postgres";
     private static final String PASS = "0710";
 
     public static Connection getConnection() {
@@ -42,7 +43,7 @@ public class ConnectionFactory {
         }
     }
 
-    public static void CloseConnection(Connection con, PreparedStatement stmt, ResultSet rs) {
+    public static void closeConnection(Connection con, PreparedStatement stmt, ResultSet rs) {
         closeConnection(con, stmt);
         try {
             if (rs != null) {

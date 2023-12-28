@@ -9,7 +9,7 @@ public class Usuario {
         this.Usuario = Usuario;
         this.senha = senha;
     }
-    public Usuario(int Usuario, String senha, String nome, String email){
+    public Usuario(String nome,String email,String senha, int usuario){
         this.Usuario = Usuario;
         this.senha = senha;
         this.nome = nome;

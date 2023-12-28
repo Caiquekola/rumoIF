@@ -5,6 +5,12 @@
 package rumoif.view;
 
 import rumoif.control.LoginController;
+import java.sql.*;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 
 /**
  *
@@ -28,25 +34,25 @@ public class LoginScreen extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTextField1 = new javax.swing.JTextField();
-        jPasswordField1 = new javax.swing.JPasswordField();
-        jButton1 = new javax.swing.JButton();
+        jtUsuario = new javax.swing.JTextField();
+        jpSenha = new javax.swing.JPasswordField();
+        jbEntrar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 290, 230, -1));
-        getContentPane().add(jPasswordField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 370, 230, -1));
+        getContentPane().add(jtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 290, 230, -1));
+        getContentPane().add(jpSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 370, 230, -1));
 
-        jButton1.setBackground(new java.awt.Color(255, 204, 0));
-        jButton1.setFont(new java.awt.Font("Glacial Indifference", 1, 14)); // NOI18N
-        jButton1.setText("ENTRAR");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jbEntrar.setBackground(new java.awt.Color(255, 204, 0));
+        jbEntrar.setFont(new java.awt.Font("Glacial Indifference", 1, 14)); // NOI18N
+        jbEntrar.setText("ENTRAR");
+        jbEntrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jbEntrarActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 440, -1, -1));
+        getContentPane().add(jbEntrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 440, -1, -1));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rumoif/resources/LoginPage.png"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -55,15 +61,55 @@ public class LoginScreen extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jbEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEntrarActionPerformed
         // TODO add your handling code here:
-        try{
-        LoginController login = new LoginController();
-        login.loginUsuario(this);
-        }catch (SQLException sql){
+        if(jtUsuario.getText().matches("")||jpSenha.getText().matches("")){
+            JOptionPane.showMessageDialog(null, "Preencha todos os campos");
+        }else{
+            try{
+                LoginController login = new LoginController();
+                login.loginUsuario(this);
+                this.setVisible(false);
+             
+            }catch (SQLException sql){
             
+            }
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+        
+        
+    }//GEN-LAST:event_jbEntrarActionPerformed
+
+    public JButton getjButton1() {
+        return jbEntrar;
+    }
+
+    public void setjButton1(JButton jButton1) {
+        this.jbEntrar = jButton1;
+    }
+
+    public JLabel getjLabel1() {
+        return jLabel1;
+    }
+
+    public void setjLabel1(JLabel jLabel1) {
+        this.jLabel1 = jLabel1;
+    }
+
+    public JPasswordField getjPasswordField1() {
+        return jpSenha;
+    }
+
+    public void setjPasswordField1(JPasswordField jPasswordField1) {
+        this.jpSenha = jPasswordField1;
+    }
+
+    public JTextField getjTextField1() {
+        return jtUsuario;
+    }
+
+    public void setjTextField1(JTextField jTextField1) {
+        this.jtUsuario = jTextField1;
+    }
 
     /**
      * @param args the command line arguments
@@ -101,9 +147,9 @@ public class LoginScreen extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JButton jbEntrar;
+    private javax.swing.JPasswordField jpSenha;
+    private javax.swing.JTextField jtUsuario;
     // End of variables declaration//GEN-END:variables
 }
