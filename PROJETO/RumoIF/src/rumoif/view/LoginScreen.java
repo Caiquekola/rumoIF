@@ -77,8 +77,9 @@ public class LoginScreen extends javax.swing.JFrame {
         getContentPane().add(jpSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 370, 230, -1));
 
         jbEntrar.setBackground(new java.awt.Color(255, 204, 0));
-        jbEntrar.setFont(new java.awt.Font("Glacial Indifference", 1, 14)); // NOI18N
-        jbEntrar.setText("ENTRAR");
+        jbEntrar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jbEntrar.setForeground(new java.awt.Color(102, 102, 102));
+        jbEntrar.setText("Entrar");
         jbEntrar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jbEntrarMouseEntered(evt);
@@ -100,7 +101,7 @@ public class LoginScreen extends javax.swing.JFrame {
                 jbEntrarKeyPressed(evt);
             }
         });
-        getContentPane().add(jbEntrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 440, -1, -1));
+        getContentPane().add(jbEntrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 440, 110, -1));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rumoif/resources/LoginPage.png"))); // NOI18N
         jLabel1.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -180,7 +181,7 @@ public class LoginScreen extends javax.swing.JFrame {
 
     private void jbEntrarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbEntrarMouseExited
         // TODO add your handling code here:
-        jbEntrar.setBackground(new Color(255, 204, 0));
+        jbEntrar.setBackground(new Color(212, 169, 0));
     }//GEN-LAST:event_jbEntrarMouseExited
 
     private void jtUsuarioMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtUsuarioMouseEntered
