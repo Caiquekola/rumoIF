@@ -27,10 +27,9 @@ public class DiretorProfessor extends javax.swing.JFrame {
     private void initComponents() {
 
         jbRemover = new javax.swing.JButton();
-        jbEditar = new javax.swing.JButton();
         jbAdicionar = new javax.swing.JButton();
         jbEditar1 = new javax.swing.JButton();
-        jbEditar2 = new javax.swing.JButton();
+        jbMateria = new javax.swing.JButton();
         Imagem = new javax.swing.JLabel();
         jbVoltar = new javax.swing.JButton();
 
@@ -48,20 +47,7 @@ public class DiretorProfessor extends javax.swing.JFrame {
                 jbRemoverActionPerformed(evt);
             }
         });
-        getContentPane().add(jbRemover, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 410, 220, 60));
-
-        jbEditar.setBackground(new java.awt.Color(55, 0, 153));
-        jbEditar.setFont(new java.awt.Font("League Spartan", 1, 24)); // NOI18N
-        jbEditar.setForeground(new java.awt.Color(255, 255, 255));
-        jbEditar.setText("Remover Matéria");
-        jbEditar.setToolTipText("");
-        jbEditar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jbEditar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbEditarActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jbEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 340, 220, 60));
+        getContentPane().add(jbRemover, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 420, 220, 60));
 
         jbAdicionar.setBackground(new java.awt.Color(55, 0, 153));
         jbAdicionar.setFont(new java.awt.Font("League Spartan", 1, 36)); // NOI18N
@@ -89,18 +75,18 @@ public class DiretorProfessor extends javax.swing.JFrame {
         });
         getContentPane().add(jbEditar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 340, 220, 60));
 
-        jbEditar2.setBackground(new java.awt.Color(55, 0, 153));
-        jbEditar2.setFont(new java.awt.Font("League Spartan", 1, 20)); // NOI18N
-        jbEditar2.setForeground(new java.awt.Color(255, 255, 255));
-        jbEditar2.setText("Adicionar Matéria");
-        jbEditar2.setToolTipText("");
-        jbEditar2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jbEditar2.addActionListener(new java.awt.event.ActionListener() {
+        jbMateria.setBackground(new java.awt.Color(55, 0, 153));
+        jbMateria.setFont(new java.awt.Font("League Spartan", 1, 20)); // NOI18N
+        jbMateria.setForeground(new java.awt.Color(255, 255, 255));
+        jbMateria.setText("Matéria(s)");
+        jbMateria.setToolTipText("");
+        jbMateria.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jbMateria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbEditar2ActionPerformed(evt);
+                jbMateriaActionPerformed(evt);
             }
         });
-        getContentPane().add(jbEditar2, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 260, 220, 60));
+        getContentPane().add(jbMateria, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 260, 220, 60));
 
         Imagem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rumoif/resources/DiretorProfessor.png"))); // NOI18N
         getContentPane().add(Imagem, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -138,20 +124,16 @@ public class DiretorProfessor extends javax.swing.JFrame {
         d.setVisible(true);
     }//GEN-LAST:event_jbRemoverActionPerformed
 
-    private void jbEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEditarActionPerformed
-        // TODO add your handling code here:
-        this.dispose();
-        DiretorProfessorEditar d = new DiretorProfessorEditar();
-        d.setVisible(true);
-    }//GEN-LAST:event_jbEditarActionPerformed
-
     private void jbEditar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEditar1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jbEditar1ActionPerformed
 
-    private void jbEditar2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEditar2ActionPerformed
+    private void jbMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbMateriaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jbEditar2ActionPerformed
+        this.dispose();
+        DiretorProfessorMateria d = new DiretorProfessorMateria();
+        d.setVisible(true);
+    }//GEN-LAST:event_jbMateriaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -192,9 +174,8 @@ public class DiretorProfessor extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Imagem;
     private javax.swing.JButton jbAdicionar;
-    private javax.swing.JButton jbEditar;
     private javax.swing.JButton jbEditar1;
-    private javax.swing.JButton jbEditar2;
+    private javax.swing.JButton jbMateria;
     private javax.swing.JButton jbRemover;
     private javax.swing.JButton jbVoltar;
     // End of variables declaration//GEN-END:variables
