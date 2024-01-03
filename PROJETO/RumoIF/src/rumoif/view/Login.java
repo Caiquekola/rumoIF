@@ -78,7 +78,8 @@ public class Login extends javax.swing.JFrame {
 
         jbEntrar.setBackground(new java.awt.Color(255, 204, 0));
         jbEntrar.setFont(new java.awt.Font("Glacial Indifference", 1, 14)); // NOI18N
-        jbEntrar.setText("ENTRAR");
+        jbEntrar.setForeground(new java.awt.Color(51, 51, 51));
+        jbEntrar.setText("Entrar");
         jbEntrar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jbEntrarMouseEntered(evt);
@@ -100,7 +101,7 @@ public class Login extends javax.swing.JFrame {
                 jbEntrarKeyPressed(evt);
             }
         });
-        getContentPane().add(jbEntrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 440, -1, -1));
+        getContentPane().add(jbEntrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 440, 110, -1));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rumoif/resources/Login.png"))); // NOI18N
         jLabel1.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -264,6 +265,7 @@ public class Login extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JButton jbEntrar;
+    private javax.swing.JButton jbEntrar1;
     private javax.swing.JPasswordField jpSenha;
     private javax.swing.JTextField jtUsuario;
     // End of variables declaration//GEN-END:variables
