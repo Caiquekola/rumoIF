@@ -63,6 +63,7 @@ public class ProfessorS extends javax.swing.JFrame {
         getContentPane().add(Selecionar, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 290, 180, 30));
 
         jlista.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jlista.setSelectedItem(jTable1);
         jlista.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jlistaActionPerformed(evt);

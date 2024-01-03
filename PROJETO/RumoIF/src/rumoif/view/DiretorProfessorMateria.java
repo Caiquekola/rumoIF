@@ -16,6 +16,10 @@ import java.sql.PreparedStatement;
 import rumoif.connection.ConnectionFactory;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
+import rumoif.model.bean.Professor;
+import rumoif.model.dao.ProfessorDAO;
 
 /**
  *
@@ -49,9 +53,35 @@ public class DiretorProfessorMateria extends javax.swing.JFrame {
                 }
             }
         });
-        
-    }
+        DefaultTableModel modelo = (DefaultTableModel) jtTabela.getModel();
+        jtTabela.setRowSorter(new TableRowSorter(modelo));
 
+        readJTable();
+    }
+    public void readJTable() {
+        DefaultTableModel modelo = (DefaultTableModel) jtTabela.getModel();
+        modelo.setNumRows(0);
+        MateriaDAO udao = new MateriaDAO();
+
+        for (Materia a : udao.read()) {
+
+            modelo.addRow(new Object[]{
+                a.getId_materia(),
+                a.getNome_materia()
+                
+
+            });
+
+        }
+
+    }
+    public void selecaoTabela(){
+        if (jtTabela.getSelectedRow() != -1) {
+            jtMateria.setText(jtTabela.getValueAt(jtTabela.getSelectedRow(), 1).toString());
+            jtId.setText(jtTabela.getValueAt(jtTabela.getSelectedRow(), 0).toString());
+
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -63,7 +93,7 @@ public class DiretorProfessorMateria extends javax.swing.JFrame {
 
         jtMateria = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jtTabela = new javax.swing.JTable();
         Remover = new javax.swing.JButton();
         jtId = new javax.swing.JTextField();
         Adicionar = new javax.swing.JButton();
@@ -85,7 +115,7 @@ public class DiretorProfessorMateria extends javax.swing.JFrame {
         });
         getContentPane().add(jtMateria, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 390, 200, 40));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jtTabela.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
                 {null, null},
@@ -104,7 +134,15 @@ public class DiretorProfessorMateria extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jtTabela.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtTabelaMouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jtTabelaMousePressed(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jtTabela);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 300, 230, 200));
 
@@ -196,16 +234,20 @@ public class DiretorProfessorMateria extends javax.swing.JFrame {
             mdao.delete(m);
             JOptionPane.showMessageDialog(null, "A matéria foi excluída!");
         }
+        readJTable();
     }
     private void adicionar(Materia m){
-        
-        if(!(materiaExiste(m))){
+        if(jtMateria.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Preencha o campo Matéria!");
+        }
+        else if(!(materiaExiste(m))){
             MateriaDAO mdao = new MateriaDAO();
             mdao.create(m);
             JOptionPane.showMessageDialog(null, "Matéria criada com êxito!");
         }else{
             JOptionPane.showMessageDialog(null, "Essa Matéria já existe!");
         }
+        readJTable();
         
     }
     private void jbVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbVoltarActionPerformed
@@ -232,6 +274,16 @@ public class DiretorProfessorMateria extends javax.swing.JFrame {
         // TODO add your handling code here:
         remover(obterCampos());
     }//GEN-LAST:event_RemoverActionPerformed
+
+    private void jtTabelaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtTabelaMouseClicked
+        // TODO add your handling code here:
+        selecaoTabela();
+    }//GEN-LAST:event_jtTabelaMouseClicked
+
+    private void jtTabelaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtTabelaMousePressed
+        // TODO add your handling code here
+        selecaoTabela();
+    }//GEN-LAST:event_jtTabelaMousePressed
 
     /**
      * @param args the command line arguments
@@ -275,9 +327,9 @@ public class DiretorProfessorMateria extends javax.swing.JFrame {
     private javax.swing.JLabel Nome1;
     private javax.swing.JButton Remover;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JButton jbVoltar;
     private javax.swing.JTextField jtId;
     private javax.swing.JTextField jtMateria;
+    private javax.swing.JTable jtTabela;
     // End of variables declaration//GEN-END:variables
 }

@@ -76,7 +76,7 @@ public class DiretorProfessor extends javax.swing.JFrame {
         getContentPane().add(jbEditar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 340, 220, 60));
 
         jbMateria.setBackground(new java.awt.Color(55, 0, 153));
-        jbMateria.setFont(new java.awt.Font("League Spartan", 1, 20)); // NOI18N
+        jbMateria.setFont(new java.awt.Font("League Spartan", 1, 36)); // NOI18N
         jbMateria.setForeground(new java.awt.Color(255, 255, 255));
         jbMateria.setText("Matéria(s)");
         jbMateria.setToolTipText("");

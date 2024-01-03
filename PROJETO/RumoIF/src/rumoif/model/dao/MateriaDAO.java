@@ -33,7 +33,7 @@ public class MateriaDAO {
         }
     }
     
-    public List<Materia> read() {
+    public static List<Materia> read() {
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -53,6 +53,7 @@ public class MateriaDAO {
         }
         return materias;
     }
+    
     
     public void update(Materia m) {
         Connection con = ConnectionFactory.getConnection();
