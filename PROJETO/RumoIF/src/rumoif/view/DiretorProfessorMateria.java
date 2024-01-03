@@ -10,6 +10,12 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import rumoif.model.bean.Materia;
+import rumoif.model.dao.MateriaDAO;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import rumoif.connection.ConnectionFactory;
+import java.sql.ResultSet;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -26,11 +32,9 @@ public class DiretorProfessorMateria extends javax.swing.JFrame {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    try {
-                        adicionar();
-                    } catch (SQLException ex) {
-                        Logger.getLogger(DiretorAlunoAdicionar.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+                    
+                        adicionar(obterCampos());
+                    
                 }
             }
         });
@@ -39,11 +43,9 @@ public class DiretorProfessorMateria extends javax.swing.JFrame {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    try {
-                        adicionar();
-                    } catch (SQLException ex) {
-                        Logger.getLogger(DiretorAlunoAdicionar.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+                    
+                        adicionar(obterCampos());
+                    
                 }
             }
         });
@@ -62,7 +64,7 @@ public class DiretorProfessorMateria extends javax.swing.JFrame {
         jtMateria = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        Adicionar1 = new javax.swing.JButton();
+        Remover = new javax.swing.JButton();
         jtId = new javax.swing.JTextField();
         Adicionar = new javax.swing.JButton();
         Nome1 = new javax.swing.JLabel();
@@ -75,6 +77,7 @@ public class DiretorProfessorMateria extends javax.swing.JFrame {
 
         jtMateria.setBackground(new java.awt.Color(0, 0, 0));
         jtMateria.setFont(new java.awt.Font("League Spartan ExtraBold", 0, 18)); // NOI18N
+        jtMateria.setForeground(new java.awt.Color(255, 255, 255));
         jtMateria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jtMateriaActionPerformed(evt);
@@ -105,12 +108,19 @@ public class DiretorProfessorMateria extends javax.swing.JFrame {
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 300, 230, 200));
 
-        Adicionar1.setBackground(new java.awt.Color(55, 0, 153));
-        Adicionar1.setText("Remover");
-        getContentPane().add(Adicionar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 470, -1, -1));
+        Remover.setBackground(new java.awt.Color(55, 0, 153));
+        Remover.setFont(new java.awt.Font("League Spartan ExtraBold", 0, 14)); // NOI18N
+        Remover.setText("Remover");
+        Remover.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RemoverActionPerformed(evt);
+            }
+        });
+        getContentPane().add(Remover, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 470, -1, 30));
 
         jtId.setBackground(new java.awt.Color(0, 0, 0));
         jtId.setFont(new java.awt.Font("League Spartan ExtraBold", 0, 18)); // NOI18N
+        jtId.setForeground(new java.awt.Color(255, 255, 255));
         jtId.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jtIdActionPerformed(evt);
@@ -119,8 +129,14 @@ public class DiretorProfessorMateria extends javax.swing.JFrame {
         getContentPane().add(jtId, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 300, 200, 40));
 
         Adicionar.setBackground(new java.awt.Color(55, 0, 153));
+        Adicionar.setFont(new java.awt.Font("League Spartan ExtraBold", 0, 14)); // NOI18N
         Adicionar.setText("Adicionar");
-        getContentPane().add(Adicionar, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 470, -1, -1));
+        Adicionar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AdicionarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(Adicionar, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 470, -1, 30));
 
         Nome1.setFont(new java.awt.Font("League Spartan Black", 0, 36)); // NOI18N
         Nome1.setForeground(new java.awt.Color(255, 255, 255));
@@ -146,9 +162,51 @@ public class DiretorProfessorMateria extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-    private void adicionar(){
+    
+    private boolean materiaExiste(Materia m){
+        Connection con = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        boolean existe = false;
+        String sql = ("SELECT * FROM rumoif.materia WHERE nome_materia = ?");
+        try {
+            stmt = con.prepareStatement(sql);
+            stmt.setString(1,m.getNome_materia());
+            
+            
+            rs = stmt.executeQuery();
+            if(rs.next()){
+                existe = true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DiretorProfessorMateria.class.getName()).log(Level.SEVERE, null, ex);
+        } finally{
+            ConnectionFactory.closeConnection(con, stmt);
+        }
+        
+        return existe;
+    }
+    private Materia obterCampos(){
         Materia m = new Materia(jtMateria.getText());
-        MateriaDAO
+        return m;
+    }
+    private void remover(Materia m){
+        if(materiaExiste(m)){
+            MateriaDAO mdao = new MateriaDAO();
+            mdao.delete(m);
+            JOptionPane.showMessageDialog(null, "A matéria foi excluída!");
+        }
+    }
+    private void adicionar(Materia m){
+        
+        if(!(materiaExiste(m))){
+            MateriaDAO mdao = new MateriaDAO();
+            mdao.create(m);
+            JOptionPane.showMessageDialog(null, "Matéria criada com êxito!");
+        }else{
+            JOptionPane.showMessageDialog(null, "Essa Matéria já existe!");
+        }
+        
     }
     private void jbVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbVoltarActionPerformed
         // TODO add your handling code here:
@@ -164,6 +222,16 @@ public class DiretorProfessorMateria extends javax.swing.JFrame {
     private void jtIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtIdActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jtIdActionPerformed
+
+    private void AdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AdicionarActionPerformed
+        // TODO add your handling code here:
+        adicionar(obterCampos());
+    }//GEN-LAST:event_AdicionarActionPerformed
+
+    private void RemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RemoverActionPerformed
+        // TODO add your handling code here:
+        remover(obterCampos());
+    }//GEN-LAST:event_RemoverActionPerformed
 
     /**
      * @param args the command line arguments
@@ -202,10 +270,10 @@ public class DiretorProfessorMateria extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Adicionar;
-    private javax.swing.JButton Adicionar1;
     private javax.swing.JLabel Imagem;
     private javax.swing.JLabel Nome;
     private javax.swing.JLabel Nome1;
+    private javax.swing.JButton Remover;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JButton jbVoltar;
