@@ -126,6 +126,9 @@ public class DiretorProfessor extends javax.swing.JFrame {
 
     private void jbEditar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEditar1ActionPerformed
         // TODO add your handling code here:
+        this.dispose();
+        DiretorProfessorEditar d = new DiretorProfessorEditar();
+        d.setVisible(true);
     }//GEN-LAST:event_jbEditar1ActionPerformed
 
     private void jbMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbMateriaActionPerformed

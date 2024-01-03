@@ -29,7 +29,7 @@ public class ProfessorS extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         Selecionar = new javax.swing.JButton();
-        jtMateria = new javax.swing.JTextField();
+        jlista = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         IMAGEM = new javax.swing.JLabel();
 
@@ -62,13 +62,13 @@ public class ProfessorS extends javax.swing.JFrame {
         });
         getContentPane().add(Selecionar, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 290, 180, 30));
 
-        jtMateria.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jtMateria.addActionListener(new java.awt.event.ActionListener() {
+        jlista.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jlista.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtMateriaActionPerformed(evt);
+                jlistaActionPerformed(evt);
             }
         });
-        getContentPane().add(jtMateria, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 240, 180, -1));
+        getContentPane().add(jlista, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, 180, -1));
 
         jLabel1.setFont(new java.awt.Font("League Spartan ExtraBold", 0, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(204, 204, 204));
@@ -82,13 +82,14 @@ public class ProfessorS extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jtMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtMateriaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtMateriaActionPerformed
-
     private void SelecionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SelecionarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_SelecionarActionPerformed
+
+    private void jlistaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jlistaActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jlistaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -134,6 +135,6 @@ public class ProfessorS extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jtMateria;
+    private javax.swing.JComboBox<String> jlista;
     // End of variables declaration//GEN-END:variables
 }
