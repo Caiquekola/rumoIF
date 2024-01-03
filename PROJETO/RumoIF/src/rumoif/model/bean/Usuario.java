@@ -1,6 +1,7 @@
 package rumoif.model.bean;
-public abstract class  Usuario {
+public abstract class Usuario {
     
+    private int nivel;
     private String Usuario;
     private String email;
     private String senha;
@@ -23,6 +24,14 @@ public abstract class  Usuario {
         this.Usuario = usuario;
         this.nome = nome;
         this.email = email;
+    }
+
+    public int getNivel() {
+        return nivel;
+    }
+
+    public void setNivel(int nivel) {
+        this.nivel = nivel;
     }
     
     public String getEmail() {

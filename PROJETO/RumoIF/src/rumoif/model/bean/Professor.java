@@ -6,18 +6,16 @@
 package rumoif.model.bean;
 
 
-public class Professor extends Usuario{
-    private final int nivel = 1;
+public class Professor extends Funcionario{
     //CRIAR PROFESSOR
     public Professor(String nome, String email, String usuario, String senha) {
         super(nome, email, usuario, senha);
+        this.setNivel(1);
     }
     //REMOVER PROFESSOR - DIRETOR
     public Professor(String nome,String email,String usuario){
         super(nome,email,usuario);
-    }
-    public int getNivel() {
-        return nivel;
+        this.setNivel(1);
     }
     
 }

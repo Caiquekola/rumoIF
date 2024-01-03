@@ -7,20 +7,15 @@ package rumoif.model.bean;
 
 
 public class Aluno extends Usuario{
-    private final int nivel = 0;
     //CRIAR ALUNO
     public Aluno(String nome, String email, String usuario, String senha) {
         super(nome, email, usuario, senha);
-        
+        this.setNivel(0);
     }
     //REMOVER ALUNO
     public Aluno(String nome, String email,String usuario){
         super(nome,email,usuario);
+        this.setNivel(0);
     }
-    
-    public int getNivel() {
-        return nivel;
-    }
-    
     
 }
