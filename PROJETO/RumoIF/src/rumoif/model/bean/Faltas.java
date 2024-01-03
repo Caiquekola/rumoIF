@@ -1,15 +1,51 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-
 package rumoif.model.bean;
-
 
 public class Faltas {
     private String id_aluno;
     private int id_materia;
-    private int id_quantidade;
+    private int quantidade;
+
+    public Faltas(String id_aluno, int id_materia, int quantidade) {
+        this.id_aluno = id_aluno;
+        this.id_materia = id_materia;
+        this.quantidade = quantidade;
+    }
+
+    public Faltas(int id_materia, int quantidade) {
+        this.id_materia = id_materia;
+        this.quantidade = quantidade;
+    }
+
+    public Faltas(String id_aluno, int quantidade) {
+        this.id_aluno = id_aluno;
+        this.quantidade = quantidade;
+    }
+    
+    
+
+    public String getId_aluno() {
+        return id_aluno;
+    }
+
+    public void setId_aluno(String id_aluno) {
+        this.id_aluno = id_aluno;
+    }
+
+    public int getId_materia() {
+        return id_materia;
+    }
+
+    public void setId_materia(int id_materia) {
+        this.id_materia = id_materia;
+    }
+
+    public int getQuantidade() {
+        return quantidade;
+    }
+
+    public void setQuantidade(int quantidade) {
+        this.quantidade = quantidade;
+    }
     
     
 }

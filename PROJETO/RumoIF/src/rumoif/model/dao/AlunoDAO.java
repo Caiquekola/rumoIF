@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 import rumoif.connection.ConnectionFactory;
 import rumoif.model.bean.Aluno;
 

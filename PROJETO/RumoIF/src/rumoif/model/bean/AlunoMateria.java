@@ -10,7 +10,7 @@ public class AlunoMateria {
     
     private int id_materia;
     private String id_aluno;
-    //Informa-se um aluno e uma matéria
+    
     public AlunoMateria(Aluno aluno, Materia materia){
         this.id_aluno = aluno.getUsuario();
         this.id_materia = materia.getId_materia();
