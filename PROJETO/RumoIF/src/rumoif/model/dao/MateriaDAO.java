@@ -20,11 +20,11 @@ public class MateriaDAO {
     public void create(Materia materia) {
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
-        String sql = ("INSERT INTO rumoif.materia (nome_materia) VALUES (?);");
+        String sql = ("INSERT INTO rumoif.materia (nome_materia) VALUES ('?');");
         
         try {
             stmt = con.prepareStatement(sql);
-            stmt.setString(1, materia.getNome_materia().toUpperCase());
+            stmt.setString(1, materia.getNome_materia());
             stmt.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(MateriaDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -33,7 +33,7 @@ public class MateriaDAO {
         }
     }
     
-    public static List<Materia> read() {
+    public List<Materia> read() {
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -54,14 +54,13 @@ public class MateriaDAO {
         return materias;
     }
     
-    
     public void update(Materia m) {
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
         String sql = ("UPDATE rumoif.materia SET nome_materia = ? WHERE id_materia = ?");
         try {
             stmt = con.prepareStatement(sql);
-            stmt.setString(1, m.getNome_materia().toUpperCase());
+            stmt.setString(1, m.getNome_materia());
             stmt.setInt(2, m.getId_materia());
             
             stmt.executeUpdate();
@@ -78,9 +77,9 @@ public class MateriaDAO {
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
         try {
-            String sql = ("DELETE FROM rumoif.materia WHERE nome_materia = ? OR id_materia = ?");
+            String sql = ("DELETE FROM rumoif.materia WHERE nome_materia = ? AND id_materia = ?");
             stmt = con.prepareStatement(sql);
-            stmt.setString(1, m.getNome_materia().toUpperCase());
+            stmt.setString(1, m.getNome_materia());
             stmt.setInt(2, m.getId_materia());
             stmt.executeUpdate();
 

@@ -7,7 +7,6 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 import rumoif.model.bean.AlunoMateria;
 
 public class AlunoMateriaDAO {
@@ -24,8 +23,6 @@ public class AlunoMateriaDAO {
             
             
             stmt.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Deu certo!");
-            
             
         } catch (SQLException ex) {
             Logger.getLogger(AlunoMateriaDAO.class.getName()).log(Level.SEVERE, null, ex);
