@@ -3,7 +3,7 @@
  👨‍💻 Projeto de um Sistema Escolar com diferentes níveis de acesso (Diretor, Professor, Aluno) baseado no seu login.  
 <br>
 👇 Baixe o executável:  
-       [Download](https://raw.githubusercontent.com/Caiquekola/rumoIF/blob/main/PROJETO/RumoIF/dist/)
+       [Não funciona aindakk](https://raw.githubusercontent.com/Caiquekola/rumoIF/blob/main/PROJETO/RumoIF/dist/)
        
 > [!TIP]
 > ATENÇÃO! Para executar baixe a pasta dist e execute comando em um CMD que está direcionado a pasta:
