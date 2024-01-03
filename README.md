@@ -1,4 +1,4 @@
-## rumoIF 🏫
+## RUMO IF 🎒
 Projeto de um Sistema Escolar com diferentes níveis de acesso (Diretor, Professor, Aluno) baseado no seu login.
 
 👇 Baixe o executável: [Download](https://raw.githubusercontent.com/Caiquekola/rumoIF/blob/main/PROJETO/RumoIF/dist/)
