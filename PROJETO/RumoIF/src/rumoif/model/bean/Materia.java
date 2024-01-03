@@ -9,9 +9,12 @@ package rumoif.model.bean;
 public class Materia {
     private int id_materia;
     private String nome_materia;
+    
+    //Serve para criar uma matéria
     public Materia(String nome){
         this.nome_materia = nome;
     }
+    
     public int getId_materia() {
         return id_materia;
     }

@@ -21,6 +21,7 @@ public class AlunoMateriaDAO {
         try {
             
             stmt = con.prepareStatement(sql);
+            
             stmt.setInt(1, alunoMateria.getId_materia());
             stmt.setString(2, alunoMateria.getId_aluno());
             

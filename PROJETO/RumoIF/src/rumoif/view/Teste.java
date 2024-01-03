@@ -15,9 +15,11 @@ public class Teste {
 
     public static void main(String[] args) {
        Aluno a = new Aluno("nome","email","user");
-       Materia m = new Materia("Matematica");
-       m.setId_materia(99);
+       Materia m = new Materia("Português");
+       m.setId_materia(1);
        AlunoMateria aM = new AlunoMateria(a,m);
+       AlunoDAO adao = new AlunoDAO();
+       AlunoDAO.create(a);
        AlunoMateriaDAO dao = new AlunoMateriaDAO();
        dao.create(aM);
     }
