@@ -31,6 +31,7 @@ public class AlunoDAO {
             stmt.setString(3, u.getUsuario());
             stmt.setString(4, u.getSenha());
             stmt.setInt(5,u.getNivel());
+            
             stmt.executeUpdate();
             
             
@@ -50,7 +51,9 @@ public class AlunoDAO {
             
             try {
                 stmt = con.prepareStatement("SELECT * from rumoif.login WHERE nivel = 0");
+                
                 rs = stmt.executeQuery();
+                
                 while(rs.next()){
                     Aluno aluno = new Aluno(rs.getString("nome"),rs.getString("email"),
                     rs.getString("usuario"),rs.getString("senha"));

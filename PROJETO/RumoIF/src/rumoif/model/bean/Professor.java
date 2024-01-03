@@ -6,7 +6,7 @@
 package rumoif.model.bean;
 
 
-public class Professor extends Visitante{
+public class Professor extends Usuario{
     private final int nivel = 1;
     //CRIAR PROFESSOR
     public Professor(String nome, String email, String usuario, String senha) {
