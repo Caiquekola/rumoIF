@@ -12,7 +12,7 @@ public class Diretor extends Funcionario{
     
     public Diretor(String Usuario, String senha) {
         super(Usuario, senha);
-        this.setNivel(3);
+        this.setNivel(2);
     }
     
 }
