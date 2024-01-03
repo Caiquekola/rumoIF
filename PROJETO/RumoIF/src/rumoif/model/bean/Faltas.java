@@ -10,4 +10,6 @@ public class Faltas {
     private String id_aluno;
     private int id_materia;
     private int id_quantidade;
+    
+    
 }

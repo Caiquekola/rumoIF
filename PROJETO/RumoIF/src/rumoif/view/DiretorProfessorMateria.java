@@ -4,6 +4,13 @@
  */
 package rumoif.view;
 
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import rumoif.model.bean.Materia;
+
 /**
  *
  * @author ADMIN
@@ -15,6 +22,32 @@ public class DiretorProfessorMateria extends javax.swing.JFrame {
      */
     public DiretorProfessorMateria() {
         initComponents();
+        jtId.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    try {
+                        adicionar();
+                    } catch (SQLException ex) {
+                        Logger.getLogger(DiretorAlunoAdicionar.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        });
+
+        jtMateria.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    try {
+                        adicionar();
+                    } catch (SQLException ex) {
+                        Logger.getLogger(DiretorAlunoAdicionar.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        });
+        
     }
 
     /**
@@ -26,14 +59,81 @@ public class DiretorProfessorMateria extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        jtMateria = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        Adicionar1 = new javax.swing.JButton();
+        jtId = new javax.swing.JTextField();
+        Adicionar = new javax.swing.JButton();
+        Nome1 = new javax.swing.JLabel();
+        Nome = new javax.swing.JLabel();
+        Imagem = new javax.swing.JLabel();
         jbVoltar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rumoif/resources/DiretorProfessorMateria.png"))); // NOI18N
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        jtMateria.setBackground(new java.awt.Color(0, 0, 0));
+        jtMateria.setFont(new java.awt.Font("League Spartan ExtraBold", 0, 18)); // NOI18N
+        jtMateria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtMateriaActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jtMateria, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 390, 200, 40));
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
+            },
+            new String [] {
+                "ID", "Matéria"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(jTable1);
+
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 300, 230, 200));
+
+        Adicionar1.setBackground(new java.awt.Color(55, 0, 153));
+        Adicionar1.setText("Remover");
+        getContentPane().add(Adicionar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 470, -1, -1));
+
+        jtId.setBackground(new java.awt.Color(0, 0, 0));
+        jtId.setFont(new java.awt.Font("League Spartan ExtraBold", 0, 18)); // NOI18N
+        jtId.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtIdActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jtId, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 300, 200, 40));
+
+        Adicionar.setBackground(new java.awt.Color(55, 0, 153));
+        Adicionar.setText("Adicionar");
+        getContentPane().add(Adicionar, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 470, -1, -1));
+
+        Nome1.setFont(new java.awt.Font("League Spartan Black", 0, 36)); // NOI18N
+        Nome1.setForeground(new java.awt.Color(255, 255, 255));
+        Nome1.setText("Matéria");
+        getContentPane().add(Nome1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 360, -1, -1));
+
+        Nome.setFont(new java.awt.Font("League Spartan Black", 0, 24)); // NOI18N
+        Nome.setForeground(new java.awt.Color(255, 255, 255));
+        Nome.setText("ID (não editável)");
+        getContentPane().add(Nome, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 280, -1, -1));
+
+        Imagem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rumoif/resources/DiretorProfessorMateria.png"))); // NOI18N
+        getContentPane().add(Imagem, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         jbVoltar.setText("jButton1");
         jbVoltar.addActionListener(new java.awt.event.ActionListener() {
@@ -46,13 +146,24 @@ public class DiretorProfessorMateria extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
+    private void adicionar(){
+        Materia m = new Materia(jtMateria.getText());
+        MateriaDAO
+    }
     private void jbVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbVoltarActionPerformed
         // TODO add your handling code here:
         this.dispose();
         DiretorProfessor d = new DiretorProfessor();
         d.setVisible(true);
     }//GEN-LAST:event_jbVoltarActionPerformed
+
+    private void jtMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtMateriaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtMateriaActionPerformed
+
+    private void jtIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtIdActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtIdActionPerformed
 
     /**
      * @param args the command line arguments
@@ -90,7 +201,15 @@ public class DiretorProfessorMateria extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton Adicionar;
+    private javax.swing.JButton Adicionar1;
+    private javax.swing.JLabel Imagem;
+    private javax.swing.JLabel Nome;
+    private javax.swing.JLabel Nome1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
     private javax.swing.JButton jbVoltar;
+    private javax.swing.JTextField jtId;
+    private javax.swing.JTextField jtMateria;
     // End of variables declaration//GEN-END:variables
 }

@@ -14,7 +14,7 @@ import rumoif.model.dao.AlunoMateriaDAO;
 public class Teste {
 
     public static void main(String[] args) {
-       Aluno a = new Aluno("nome","email","user");
+       Aluno a = new Aluno("nome","email","user","00");
        Materia m = new Materia("Português");
        m.setId_materia(1);
        AlunoMateria aM = new AlunoMateria(a,m);
