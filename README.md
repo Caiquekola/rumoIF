@@ -1,8 +1,9 @@
 ## RUMO IF 🎒
-Projeto de um Sistema Escolar com diferentes níveis de acesso (Diretor, Professor, Aluno) baseado no seu login.
-
+👨‍💻 Projeto de um Sistema Escolar com diferentes níveis de acesso (Diretor, Professor, Aluno) baseado no seu login.
+<br>
 👇 Baixe o executável: [Download](https://raw.githubusercontent.com/Caiquekola/rumoIF/blob/main/PROJETO/RumoIF/dist/)
-ATENÇÃO! Para executar baixe a pasta dist e execute comando em um CMD que está direcionado a pasta: java -jar "RumoIF.jar" 
+ATENÇÃO! Para executar baixe a pasta dist e execute comando em um CMD que está direcionado a pasta: java -jar "RumoIF.jar"
+<br>
 🔑 Senhas para acesso:
 Diretor - Login: 0076890, Senha: crd
 Professor - Login: 0056837, Senha: ca
