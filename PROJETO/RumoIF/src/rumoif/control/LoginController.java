@@ -1,15 +1,15 @@
 package rumoif.control;
 
 import rumoif.connection.ConnectionFactory;
-import rumoif.view.LoginScreen;
+import rumoif.view.Login;
 import java.sql.*;
-import rumoif.model.dao.UsuarioDAO;
+import rumoif.model.dao.LoginDAO;
 
 public class LoginController {
     
-    public int loginUsuario(LoginScreen view) throws SQLException{
+    public int loginUsuario(Login view) throws SQLException{
         Connection con = ConnectionFactory.getConnection();
-        UsuarioDAO login = new UsuarioDAO();
+        LoginDAO login = new LoginDAO();
         return login.login((view.getjTextField1().getText()), view.getjPasswordField1().getText());
     }
     

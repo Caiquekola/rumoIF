@@ -4,32 +4,23 @@
  */
 package rumoif.view;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JOptionPane;
-import rumoif.connection.ConnectionFactory;
-import rumoif.model.bean.Usuario;
-import rumoif.model.dao.UsuarioDAO;
+import rumoif.model.bean.Aluno;
+import rumoif.model.dao.AlunoDAO;
 
-/**
- *
- * @author Caiqu
- */
+
 public class Teste {
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
-        // TODO code application logic here
-        Usuario userTeste = new Usuario("Jabaria","jabaria@hotmail.com","123","5",0);
-        UsuarioDAO login = new UsuarioDAO();
-        login.create(userTeste);
-        
-       
+       String nome = "Paulo";
+       String email = "paulo@gmail.com";
+       String usuario = "Paulo";
+       String senha = "123";
+       String nivel;
+       Aluno a = new Aluno(nome,email,usuario,senha);
+       AlunoDAO dao = new AlunoDAO();
+       //AlunoDAO.create(a);
+       dao.delete(a);
+      
     }
     
 }
