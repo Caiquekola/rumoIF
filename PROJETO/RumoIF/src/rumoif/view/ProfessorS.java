@@ -26,21 +26,69 @@ public class ProfessorS extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        Selecionar = new javax.swing.JButton();
+        jtMateria = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        IMAGEM = new javax.swing.JLabel();
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null},
+                {null},
+                {null},
+                {null}
+            },
+            new String [] {
+                "Matéria(s)"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
+
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 220, 180, 180));
+
+        Selecionar.setBackground(new java.awt.Color(102, 102, 102));
+        Selecionar.setFont(new java.awt.Font("League Spartan ExtraBold", 0, 18)); // NOI18N
+        Selecionar.setForeground(new java.awt.Color(255, 255, 255));
+        Selecionar.setText("Selecionar");
+        Selecionar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SelecionarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(Selecionar, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 290, 180, 30));
+
+        jtMateria.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jtMateria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtMateriaActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jtMateria, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 240, 180, -1));
+
+        jLabel1.setFont(new java.awt.Font("League Spartan ExtraBold", 0, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel1.setText("Matéria");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 220, -1, -1));
+
+        IMAGEM.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rumoif/resources/Professor.png"))); // NOI18N
+        getContentPane().add(IMAGEM, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jtMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtMateriaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtMateriaActionPerformed
+
+    private void SelecionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SelecionarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_SelecionarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -81,5 +129,11 @@ public class ProfessorS extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel IMAGEM;
+    private javax.swing.JButton Selecionar;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JTextField jtMateria;
     // End of variables declaration//GEN-END:variables
 }
