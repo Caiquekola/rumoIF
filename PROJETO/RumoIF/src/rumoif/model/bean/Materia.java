@@ -10,7 +10,13 @@ public class Materia {
     private int id_materia;
     private String nome_materia;
     
-    //Serve para criar uma matéria
+    //Usado no read
+    public Materia(String nome, int id_materia){
+        this.nome_materia = nome;
+        this.id_materia = id_materia;
+    }
+    
+    //criação de materia
     public Materia(String nome){
         this.nome_materia = nome;
     }
