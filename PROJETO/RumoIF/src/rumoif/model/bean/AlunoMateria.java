@@ -7,17 +7,23 @@ package rumoif.model.bean;
 
 
 public class AlunoMateria {
-    private int id_aluno;
+    
     private int id_materia;
+    private String id_aluno;
+    
+    public AlunoMateria(Aluno aluno, Materia materia){
+        this.id_aluno = aluno.getUsuario();
+        this.id_materia = materia.getId_materia();
+    }
 
-    public int getId_aluno() {
+    public String getId_aluno() {
         return id_aluno;
     }
 
-    public void setId_aluno(int id_aluno) {
+    public void setId_aluno(String id_aluno) {
         this.id_aluno = id_aluno;
     }
-
+    
     public int getId_materia() {
         return id_materia;
     }

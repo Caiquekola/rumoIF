@@ -5,22 +5,21 @@
 package rumoif.view;
 
 import rumoif.model.bean.Aluno;
+import rumoif.model.bean.AlunoMateria;
+import rumoif.model.bean.Materia;
 import rumoif.model.dao.AlunoDAO;
+import rumoif.model.dao.AlunoMateriaDAO;
 
 
 public class Teste {
 
     public static void main(String[] args) {
-       String nome = "Paulo";
-       String email = "paulo@gmail.com";
-       String usuario = "Paulo";
-       String senha = "123";
-       String nivel;
-       Aluno a = new Aluno(nome,email,usuario,senha);
-       AlunoDAO dao = new AlunoDAO();
-       //AlunoDAO.create(a);
-       dao.delete(a);
-      
+       Aluno a = new Aluno("nome","email","user");
+       Materia m = new Materia("Matematica");
+       m.setId_materia(99);
+       AlunoMateria aM = new AlunoMateria(a,m);
+       AlunoMateriaDAO dao = new AlunoMateriaDAO();
+       dao.create(aM);
     }
     
 }
