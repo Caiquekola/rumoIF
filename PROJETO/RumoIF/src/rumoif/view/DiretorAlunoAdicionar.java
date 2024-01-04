@@ -232,14 +232,14 @@ public class DiretorAlunoAdicionar extends javax.swing.JFrame {
             Connection con = ConnectionFactory.getConnection();
             ResultSet rs = null;
             String usuarioExiste = "SELECT usuario,email FROM rumoif.login "
-                    + "WHERE usuario = '" + jtUsuario.getText() + "' OR email = '" + jtEmail.getText().toLowerCase() + "'";
+                    + "WHERE usuario = '" + jtNome.getText().substring(0, 6) + "' OR email = '" + jtEmail.getText().toLowerCase() + "'";
             stmt = con.prepareStatement(usuarioExiste);
             rs = stmt.executeQuery();
             if (rs.next()) {
                 JOptionPane.showMessageDialog(null, "Usuário ou Email existentes!");
             } else {
                 Aluno u = new Aluno(jtNome.getText(), jtEmail.getText().toLowerCase(),
-                        jtUsuario.getText(), jtSenha.getText());
+                        jtUsuario.getText().substring(0, 7), jtSenha.getText());
                 AlunoDAO dao = new AlunoDAO();
                 dao.create(u);
                 jtNome.setText("");

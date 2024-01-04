@@ -244,7 +244,7 @@ public class DiretorProfessorAdicionar extends javax.swing.JFrame {
                 
             } else {
                 
-                Professor p = new Professor(jtNome.getText(), jtEmail.getText().toLowerCase(),jtUsuario.getText(), jtSenha.getText());
+                Professor p = new Professor(jtNome.getText(), jtEmail.getText().toLowerCase(),jtUsuario.getText().substring(0, 7), jtSenha.getText());
                 ProfessorDAO dao = new ProfessorDAO();
                 dao.create(p);
                 jtNome.setText("");

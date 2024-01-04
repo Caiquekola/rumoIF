@@ -5,6 +5,7 @@
 
 package rumoif.model.dao;
 
+import rumoif.model.bean.GenericDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,8 +18,10 @@ import rumoif.connection.ConnectionFactory;
 import rumoif.model.bean.Aluno;
 
 
-public class AlunoDAO{
-    public static void create(Aluno u) {
+public class AlunoDAO implements GenericDAO<Aluno>{
+ 
+    
+    public void create(Aluno u) {
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
 
@@ -108,6 +111,8 @@ public class AlunoDAO{
         }
         
     }
+
+    
 
     
 }

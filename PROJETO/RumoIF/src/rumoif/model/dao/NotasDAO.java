@@ -9,6 +9,7 @@ package rumoif.model.dao;
  * @author Caio Rievers
  */
 
+import rumoif.model.bean.GenericDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,8 +23,9 @@ import rumoif.model.bean.Aluno;
 import rumoif.model.bean.Materia;
 import rumoif.model.bean.Notas;
 
-public class NotasDAO {
+public class NotasDAO implements GenericDAO<Notas>{
     
+    @Override
     public void create(Notas n) {
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;

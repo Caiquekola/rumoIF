@@ -5,6 +5,7 @@ package rumoif.model.dao;
  * @author Caio Rievers
  */
 
+import rumoif.model.bean.GenericDAO;
 import rumoif.connection.ConnectionFactory;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,8 +14,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import rumoif.model.bean.ProfessorMateria;
 
-public class ProfessorMateriaDAO {
+public class ProfessorMateriaDAO implements GenericDAO<ProfessorMateria>{
     
+    @Override
     public void create(ProfessorMateria profMateria){
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;

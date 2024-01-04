@@ -8,7 +8,7 @@ package rumoif.model.bean;
  *
  * @author Caio Rievers
  */
-public class Diretor extends Funcionario{
+public class Diretor extends Usuario{
     
     public Diretor(String Usuario, String senha) {
         super(Usuario, senha);

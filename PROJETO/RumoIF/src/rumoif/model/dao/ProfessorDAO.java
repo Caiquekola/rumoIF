@@ -1,5 +1,6 @@
 package rumoif.model.dao;
 
+import rumoif.model.bean.GenericDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,8 +12,9 @@ import java.util.logging.Logger;
 import rumoif.connection.ConnectionFactory;
 import rumoif.model.bean.Professor;
 
-public class ProfessorDAO {
+public class ProfessorDAO implements GenericDAO<Professor>{
 
+    @Override
     public void create(Professor u) {
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;

@@ -4,6 +4,7 @@
  */
 package rumoif.model.dao;
 
+import rumoif.model.bean.GenericDAO;
 import rumoif.connection.ConnectionFactory;
 import rumoif.model.bean.Materia;
 import java.sql.ResultSet;
@@ -15,8 +16,9 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class MateriaDAO {
+public class MateriaDAO implements GenericDAO<Materia>{
 
+    @Override
     public void create(Materia materia) {
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
