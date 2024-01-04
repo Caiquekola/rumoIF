@@ -1,3 +1,0 @@
-No caso de se ter um botão para fechar o JFrame, os códigos:
-System.exit(0); encerra a aplicação.
-this.dispose(); fecha somente o JFrame em questão, onde this = JFrame.
