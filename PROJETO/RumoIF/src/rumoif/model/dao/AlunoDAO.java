@@ -17,7 +17,7 @@ import rumoif.connection.ConnectionFactory;
 import rumoif.model.bean.Aluno;
 
 
-public class AlunoDAO {
+public class AlunoDAO{
     public static void create(Aluno u) {
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
@@ -108,4 +108,6 @@ public class AlunoDAO {
         }
         
     }
+
+    
 }
