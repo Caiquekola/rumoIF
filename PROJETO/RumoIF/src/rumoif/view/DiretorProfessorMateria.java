@@ -4,22 +4,7 @@
  */
 package rumoif.view;
 
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import rumoif.model.bean.Materia;
-import rumoif.model.dao.MateriaDAO;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import rumoif.connection.ConnectionFactory;
-import java.sql.ResultSet;
-import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableRowSorter;
-import rumoif.model.bean.Professor;
-import rumoif.model.dao.ProfessorDAO;
+
 
 /**
  *
@@ -32,56 +17,11 @@ public class DiretorProfessorMateria extends javax.swing.JFrame {
      */
     public DiretorProfessorMateria() {
         initComponents();
-        jtId.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    
-                        adicionar(obterCampos());
-                    
-                }
-            }
-        });
-
-        jtMateria.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    
-                        adicionar(obterCampos());
-                    
-                }
-            }
-        });
-        DefaultTableModel modelo = (DefaultTableModel) jtTabela.getModel();
-        jtTabela.setRowSorter(new TableRowSorter(modelo));
-
-        readJTable();
+        
+        
     }
-    public void readJTable() {
-        DefaultTableModel modelo = (DefaultTableModel) jtTabela.getModel();
-        modelo.setNumRows(0);
-        MateriaDAO udao = new MateriaDAO();
-
-        for (Materia a : udao.read()) {
-
-            modelo.addRow(new Object[]{
-                a.getId_materia(),
-                a.getNome_materia()
-                
-
-            });
-
-        }
-
-    }
-    public void selecaoTabela(){
-        if (jtTabela.getSelectedRow() != -1) {
-            jtMateria.setText(jtTabela.getValueAt(jtTabela.getSelectedRow(), 1).toString());
-            jtId.setText(jtTabela.getValueAt(jtTabela.getSelectedRow(), 0).toString());
-
-        }
-    }
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -91,100 +31,39 @@ public class DiretorProfessorMateria extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jtMateria = new javax.swing.JTextField();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jtTabela = new javax.swing.JTable();
-        Remover = new javax.swing.JButton();
-        jtId = new javax.swing.JTextField();
-        Adicionar = new javax.swing.JButton();
-        Nome1 = new javax.swing.JLabel();
-        Nome = new javax.swing.JLabel();
+        jbAdicionar = new javax.swing.JButton();
+        jbEditar1 = new javax.swing.JButton();
         Imagem = new javax.swing.JLabel();
         jbVoltar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jtMateria.setBackground(new java.awt.Color(0, 0, 0));
-        jtMateria.setFont(new java.awt.Font("League Spartan ExtraBold", 0, 18)); // NOI18N
-        jtMateria.setForeground(new java.awt.Color(255, 255, 255));
-        jtMateria.addActionListener(new java.awt.event.ActionListener() {
+        jbAdicionar.setBackground(new java.awt.Color(55, 0, 153));
+        jbAdicionar.setFont(new java.awt.Font("League Spartan", 1, 36)); // NOI18N
+        jbAdicionar.setForeground(new java.awt.Color(255, 255, 255));
+        jbAdicionar.setText("Adicionar ou Remover");
+        jbAdicionar.setToolTipText("");
+        jbAdicionar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jbAdicionar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtMateriaActionPerformed(evt);
+                jbAdicionarActionPerformed(evt);
             }
         });
-        getContentPane().add(jtMateria, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 390, 200, 40));
+        getContentPane().add(jbAdicionar, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 400, 380, 60));
 
-        jtTabela.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
-            },
-            new String [] {
-                "ID", "Matéria"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jtTabela.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jtTabelaMouseClicked(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                jtTabelaMousePressed(evt);
-            }
-        });
-        jScrollPane1.setViewportView(jtTabela);
-
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 300, 230, 200));
-
-        Remover.setBackground(new java.awt.Color(55, 0, 153));
-        Remover.setFont(new java.awt.Font("League Spartan ExtraBold", 0, 14)); // NOI18N
-        Remover.setText("Remover");
-        Remover.addActionListener(new java.awt.event.ActionListener() {
+        jbEditar1.setBackground(new java.awt.Color(55, 0, 153));
+        jbEditar1.setFont(new java.awt.Font("League Spartan", 1, 36)); // NOI18N
+        jbEditar1.setForeground(new java.awt.Color(255, 255, 255));
+        jbEditar1.setText("Matéria p/ Professor");
+        jbEditar1.setToolTipText("");
+        jbEditar1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jbEditar1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                RemoverActionPerformed(evt);
+                jbEditar1ActionPerformed(evt);
             }
         });
-        getContentPane().add(Remover, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 470, -1, 30));
-
-        jtId.setBackground(new java.awt.Color(0, 0, 0));
-        jtId.setFont(new java.awt.Font("League Spartan ExtraBold", 0, 18)); // NOI18N
-        jtId.setForeground(new java.awt.Color(255, 255, 255));
-        jtId.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtIdActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jtId, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 300, 200, 40));
-
-        Adicionar.setBackground(new java.awt.Color(55, 0, 153));
-        Adicionar.setFont(new java.awt.Font("League Spartan ExtraBold", 0, 14)); // NOI18N
-        Adicionar.setText("Adicionar");
-        Adicionar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                AdicionarActionPerformed(evt);
-            }
-        });
-        getContentPane().add(Adicionar, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 470, -1, 30));
-
-        Nome1.setFont(new java.awt.Font("League Spartan Black", 0, 36)); // NOI18N
-        Nome1.setForeground(new java.awt.Color(255, 255, 255));
-        Nome1.setText("Matéria");
-        getContentPane().add(Nome1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 360, -1, -1));
-
-        Nome.setFont(new java.awt.Font("League Spartan Black", 0, 24)); // NOI18N
-        Nome.setForeground(new java.awt.Color(255, 255, 255));
-        Nome.setText("ID (não editável)");
-        getContentPane().add(Nome, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 280, -1, -1));
+        getContentPane().add(jbEditar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 480, 380, 60));
 
         Imagem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rumoif/resources/DiretorProfessorMateria.png"))); // NOI18N
         getContentPane().add(Imagem, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -201,55 +80,10 @@ public class DiretorProfessorMateria extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
     
-    private boolean materiaExiste(Materia m){
-        Connection con = ConnectionFactory.getConnection();
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
-        boolean existe = false;
-        String sql = ("SELECT * FROM rumoif.materia WHERE nome_materia = ?");
-        try {
-            stmt = con.prepareStatement(sql);
-            stmt.setString(1,m.getNome_materia());
-            
-            
-            rs = stmt.executeQuery();
-            if(rs.next()){
-                existe = true;
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(DiretorProfessorMateria.class.getName()).log(Level.SEVERE, null, ex);
-        } finally{
-            ConnectionFactory.closeConnection(con, stmt);
-        }
-        
-        return existe;
-    }
-    private Materia obterCampos(){
-        Materia m = new Materia(jtMateria.getText());
-        return m;
-    }
-    private void remover(Materia m){
-        if(materiaExiste(m)){
-            MateriaDAO mdao = new MateriaDAO();
-            mdao.delete(m);
-            JOptionPane.showMessageDialog(null, "A matéria foi excluída!");
-        }
-        readJTable();
-    }
-    private void adicionar(Materia m){
-        if(jtMateria.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null, "Preencha o campo Matéria!");
-        }
-        else if(!(materiaExiste(m))){
-            MateriaDAO mdao = new MateriaDAO();
-            mdao.create(m);
-            JOptionPane.showMessageDialog(null, "Matéria criada com êxito!");
-        }else{
-            JOptionPane.showMessageDialog(null, "Essa Matéria já existe!");
-        }
-        readJTable();
-        
-    }
+    
+    
+   
+   
     private void jbVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbVoltarActionPerformed
         // TODO add your handling code here:
         this.dispose();
@@ -257,33 +91,19 @@ public class DiretorProfessorMateria extends javax.swing.JFrame {
         d.setVisible(true);
     }//GEN-LAST:event_jbVoltarActionPerformed
 
-    private void jtMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtMateriaActionPerformed
+    private void jbAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAdicionarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtMateriaActionPerformed
+        this.dispose();
+        DiretorProfessorMateriaAdicionar d = new DiretorProfessorMateriaAdicionar();
+        d.setVisible(true);
+    }//GEN-LAST:event_jbAdicionarActionPerformed
 
-    private void jtIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtIdActionPerformed
+    private void jbEditar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEditar1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtIdActionPerformed
-
-    private void AdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AdicionarActionPerformed
-        // TODO add your handling code here:
-        adicionar(obterCampos());
-    }//GEN-LAST:event_AdicionarActionPerformed
-
-    private void RemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RemoverActionPerformed
-        // TODO add your handling code here:
-        remover(obterCampos());
-    }//GEN-LAST:event_RemoverActionPerformed
-
-    private void jtTabelaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtTabelaMouseClicked
-        // TODO add your handling code here:
-        selecaoTabela();
-    }//GEN-LAST:event_jtTabelaMouseClicked
-
-    private void jtTabelaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtTabelaMousePressed
-        // TODO add your handling code here
-        selecaoTabela();
-    }//GEN-LAST:event_jtTabelaMousePressed
+        this.dispose();
+        DiretorProfessorMateriaProfessor d = new DiretorProfessorMateriaProfessor();
+        d.setVisible(true);
+    }//GEN-LAST:event_jbEditar1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -311,6 +131,9 @@ public class DiretorProfessorMateria extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(DiretorProfessorMateria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -321,15 +144,9 @@ public class DiretorProfessorMateria extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton Adicionar;
     private javax.swing.JLabel Imagem;
-    private javax.swing.JLabel Nome;
-    private javax.swing.JLabel Nome1;
-    private javax.swing.JButton Remover;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton jbAdicionar;
+    private javax.swing.JButton jbEditar1;
     private javax.swing.JButton jbVoltar;
-    private javax.swing.JTextField jtId;
-    private javax.swing.JTextField jtMateria;
-    private javax.swing.JTable jtTabela;
     // End of variables declaration//GEN-END:variables
 }

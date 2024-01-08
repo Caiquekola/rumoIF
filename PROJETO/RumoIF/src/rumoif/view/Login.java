@@ -120,7 +120,7 @@ public class Login extends javax.swing.JFrame {
 
     private void fazerLogin() {
         if (jtUsuario.getText().isEmpty() || jpSenha.getPassword().length == 0) {
-            JOptionPane.showMessageDialog(null, "Preencha todos os campos");
+            JOptionPane.showMessageDialog(null, "Preencha todos os campos!");
         } else {
             try {
                 LoginController login = new LoginController();

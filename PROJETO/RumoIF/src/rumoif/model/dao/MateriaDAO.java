@@ -22,7 +22,7 @@ public class MateriaDAO implements GenericDAO<Materia>{
     public void create(Materia materia) {
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
-        String sql = ("INSERT INTO rumoif.materia (nome_materia) VALUES ('?');");
+        String sql = ("INSERT INTO rumoif.materia (nome_materia) VALUES (?);");
         
         try {
             stmt = con.prepareStatement(sql);
@@ -79,10 +79,10 @@ public class MateriaDAO implements GenericDAO<Materia>{
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
         try {
-            String sql = ("DELETE FROM rumoif.materia WHERE nome_materia = ? AND id_materia = ?");
+            String sql = ("DELETE FROM rumoif.materia WHERE nome_materia = ?");
             stmt = con.prepareStatement(sql);
             stmt.setString(1, m.getNome_materia());
-            stmt.setInt(2, m.getId_materia());
+  
             stmt.executeUpdate();
 
         } catch (SQLException ex) {
