@@ -14,6 +14,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import rumoif.model.bean.Professor;
+import rumoif.model.dao.ProfessorDAO;
 
 /**
  *
@@ -120,11 +122,11 @@ public class Login extends javax.swing.JFrame {
 
     private void fazerLogin() {
         if (jtUsuario.getText().isEmpty() || jpSenha.getPassword().length == 0) {
-            JOptionPane.showMessageDialog(null, "Preencha todos os campos!");
+            JOptionPane.showMessageDialog(this, "Preencha todos os campos!", "Preencha todos os campos", JOptionPane.HEIGHT);
         } else {
             try {
                 LoginController login = new LoginController();
-                
+
                 switch (login.loginUsuario(this)) {
                     case 0:
                         this.dispose();
@@ -132,17 +134,19 @@ public class Login extends javax.swing.JFrame {
                         a.setVisible(true);
                         break;
                     case 1:
-                        this.dispose();
-                        ProfessorS p = new ProfessorS();
+                        ProfessorS p = new ProfessorS(login.nomeProfessor(this));
                         p.setVisible(true);
+                        this.dispose();
+
                         break;
+
                     case 2:
                         this.dispose();
                         DiretorS d = new DiretorS();
                         d.setVisible(true);
                         break;
                     default:
-                        JOptionPane.showMessageDialog(null, "ERRO! Usuário ou senha incorretos!");
+                        JOptionPane.showMessageDialog(this, "ERRO! Usuário ou senha incorretos!", "Erro de Login!", JOptionPane.YES_OPTION);
                         break;
                 }
             } catch (SQLException sql) {

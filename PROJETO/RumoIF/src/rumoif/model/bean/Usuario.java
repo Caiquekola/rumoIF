@@ -7,7 +7,7 @@ public abstract class Usuario {
     private String senha;
     private String nome;
     
-    //Login
+    //Login e passar professor para interface da frente
     public Usuario(String Usuario, String senha){
         this.Usuario = Usuario;
         this.senha = senha;

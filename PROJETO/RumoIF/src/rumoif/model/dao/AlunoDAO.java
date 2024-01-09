@@ -44,33 +44,59 @@ public class AlunoDAO implements GenericDAO<Aluno>{
         }
 
     }
-    public  List<Aluno> read(){
-            Connection con = ConnectionFactory.getConnection();
-            PreparedStatement stmt = null;
-            ResultSet rs = null;
-            
-            List<Aluno> alunos = new ArrayList<>();
-            
-            try {
-                stmt = con.prepareStatement("SELECT * from rumoif.login WHERE nivel = 0");
-                
-                rs = stmt.executeQuery();
-                
-                while(rs.next()){
-                    Aluno aluno = new Aluno(rs.getString("nome"),rs.getString("email"),
-                    rs.getString("usuario"),rs.getString("senha"));
-                    alunos.add(aluno);
-                }
-                
-            } catch (SQLException ex) {
-                Logger.getLogger(AlunoDAO.class.getName()).log(Level.SEVERE, null, ex);
-            }finally{
+    public List<Aluno> read() {
+        Connection con = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        List<Aluno> alunos = new ArrayList<>();
+
+        try {
+            stmt = con.prepareStatement("SELECT * from rumoif.login WHERE nivel = 0");
+
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Aluno aluno = new Aluno(rs.getString("nome"), rs.getString("email"),
+                        rs.getString("usuario"), rs.getString("senha"));
+                alunos.add(aluno);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(AlunoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
             ConnectionFactory.closeConnection(con, stmt, rs);
         }
-            return alunos;
-            
+        return alunos;
+
+    }
+    //Polimorfismo para procurar aluno pelo nome e devolver dados, utilizado na tabela de professor e materia
+    public Aluno read(String usuario) {
+        Connection con = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        Aluno alunon = null;
+
+        try {
+            stmt = con.prepareStatement("SELECT * from rumoif.login WHERE usuario = ?");
+            stmt.setString(1,usuario);
+            rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                alunon = new Aluno(rs.getString("nome"), rs.getString("email"),
+                        rs.getString("usuario"), rs.getString("senha"));
+                
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(AlunoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            ConnectionFactory.closeConnection(con, stmt, rs);
         }
-    
+        return alunon;
+
+    }
     public void update(Aluno a){
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;

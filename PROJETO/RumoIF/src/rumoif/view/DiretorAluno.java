@@ -26,14 +26,29 @@ public class DiretorAluno extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        Matéria = new javax.swing.JButton();
         jbRemover = new javax.swing.JButton();
         jbEditar = new javax.swing.JButton();
         jbAdicionar = new javax.swing.JButton();
         Imagem = new javax.swing.JLabel();
         jbVoltar = new javax.swing.JButton();
+        Matéria1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        Matéria.setBackground(new java.awt.Color(0, 102, 0));
+        Matéria.setFont(new java.awt.Font("League Spartan", 1, 36)); // NOI18N
+        Matéria.setForeground(new java.awt.Color(255, 255, 255));
+        Matéria.setText("Matéria");
+        Matéria.setToolTipText("");
+        Matéria.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        Matéria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MatériaActionPerformed(evt);
+            }
+        });
+        getContentPane().add(Matéria, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 410, 220, 60));
 
         jbRemover.setBackground(new java.awt.Color(0, 102, 0));
         jbRemover.setFont(new java.awt.Font("League Spartan", 1, 36)); // NOI18N
@@ -85,6 +100,19 @@ public class DiretorAluno extends javax.swing.JFrame {
         });
         getContentPane().add(jbVoltar, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 500, 150, 40));
 
+        Matéria1.setBackground(new java.awt.Color(0, 102, 0));
+        Matéria1.setFont(new java.awt.Font("League Spartan", 1, 36)); // NOI18N
+        Matéria1.setForeground(new java.awt.Color(255, 255, 255));
+        Matéria1.setText("Matéria");
+        Matéria1.setToolTipText("");
+        Matéria1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        Matéria1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Matéria1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(Matéria1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 410, 220, 60));
+
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
@@ -116,6 +144,17 @@ public class DiretorAluno extends javax.swing.JFrame {
         DiretorAlunoEditar d = new DiretorAlunoEditar();
         d.setVisible(true);
     }//GEN-LAST:event_jbEditarActionPerformed
+
+    private void MatériaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MatériaActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+        DiretorAlunoMateria d = new DiretorAlunoMateria();
+        d.setVisible(true);
+    }//GEN-LAST:event_MatériaActionPerformed
+
+    private void Matéria1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Matéria1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_Matéria1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -157,6 +196,8 @@ public class DiretorAluno extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Imagem;
+    private javax.swing.JButton Matéria;
+    private javax.swing.JButton Matéria1;
     private javax.swing.JButton jbAdicionar;
     private javax.swing.JButton jbEditar;
     private javax.swing.JButton jbRemover;

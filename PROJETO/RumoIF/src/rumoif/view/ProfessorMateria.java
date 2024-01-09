@@ -4,6 +4,20 @@
  */
 package rumoif.view;
 
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
+import rumoif.model.bean.Faltas;
+import rumoif.model.bean.Materia;
+import rumoif.model.bean.Notas;
+import rumoif.model.bean.Professor;
+import rumoif.model.dao.FaltasDAO;
+import rumoif.model.dao.MateriaDAO;
+import rumoif.model.dao.NotasDAO;
+import rumoif.model.dao.ProfessorDAO;
+
 /**
  *
  * @author ADMIN
@@ -13,10 +27,92 @@ public class ProfessorMateria extends javax.swing.JFrame {
     /**
      * Creates new form ProfessorMateria
      */
-    public ProfessorMateria() {
+    static Materia materia;
+    static Professor professor;
+    public ProfessorMateria(Materia materia,Professor p) {
         initComponents();
-    }
+        this.materia = materia;
+        this.professor = p;
+        this.jNome.setText(p.getNome());
+        
+        jtAtividade.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    
+                    
+                }
+            }
+        });
+        jtNota.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    
+                    
+                }
+            }
+        });
+        jtNome.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    
+                    
+                }
+            }
+        });
+        
+        DefaultTableModel modelo = (DefaultTableModel) jtTabela.getModel();
+        jtTabela.setRowSorter(new TableRowSorter(modelo));
 
+        readJTable();
+    }
+    public void readJTable() {
+        DefaultTableModel modelo = (DefaultTableModel) jtTabela.getModel();
+        modelo.setNumRows(0);
+
+        NotasDAO mDao = new NotasDAO();
+        FaltasDAO pDao = new FaltasDAO();
+        
+        List<Notas> notas = mDao.read(materia);
+        List<Alunos> alunos = notas.get(0).getId_aluno()
+        List<Faltas> faltas = pDao.read(materia);
+
+        int maxSize = Math.max(materias.size(), professores.size());
+
+        for (int i = 0; i < maxSize; i++) {
+            Object[] rowData = new Object[3]; // Array para armazenar dados de uma linha
+
+            // Adiciona dados da matéria se existir na posição 'i' da lista de matérias
+            if (i < materias.size()) {
+                Materia materia = materias.get(i);
+                rowData[0] = materia.getNome_materia();
+            }
+
+            // Adiciona dados do professor se existir na posição 'i' da lista de professores
+            if (i < professores.size()) {
+                Professor professor = professores.get(i);
+                rowData[1] = professor.getUsuario();
+            }
+            if (i < professores.size()) {
+                Professor professor = professores.get(i);
+                rowData[2] = professor.getNome();
+            }
+
+            modelo.addRow(rowData); // Adiciona a linha ao modelo da tabela
+        }
+
+    }
+//    public void selecaoTabela(){
+//        if (jtTabela.getSelectedRow() != -1) {
+//            jtMateria.setText(jtTabela.getValueAt(jtTabela.getSelectedRow(), 1).toString());
+//            jtId.setText(jtTabela.getValueAt(jtTabela.getSelectedRow(), 0).toString());
+//
+//        }
+//    }
+    
+   
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -26,22 +122,146 @@ public class ProfessorMateria extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jSpinner1 = new javax.swing.JSpinner();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        buttonGroup1 = new javax.swing.ButtonGroup();
+        AdicionarNota1 = new javax.swing.JButton();
+        Aluno = new javax.swing.JLabel();
+        jtNota = new javax.swing.JTextField();
+        Nota = new javax.swing.JLabel();
+        jtAtividade = new javax.swing.JTextField();
+        Atividade = new javax.swing.JLabel();
+        AdicionarNota2 = new javax.swing.JButton();
+        AdicionarNota = new javax.swing.JButton();
+        AdicionarFalta1 = new javax.swing.JButton();
+        jtNome = new javax.swing.JTextField();
+        jNome = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jtTabela = new javax.swing.JTable();
         IMAGEM = new javax.swing.JLabel();
+        jvoltar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        getContentPane().add(jSpinner1, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 170, -1, -1));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        getContentPane().add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 230, -1, -1));
+        AdicionarNota1.setBackground(new java.awt.Color(102, 102, 102));
+        AdicionarNota1.setFont(new java.awt.Font("League Spartan", 0, 14)); // NOI18N
+        AdicionarNota1.setText("Adicionar Atividade");
+        AdicionarNota1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AdicionarNota1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(AdicionarNota1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 670, 190, 30));
+
+        Aluno.setFont(new java.awt.Font("League Spartan Black", 1, 36)); // NOI18N
+        Aluno.setForeground(new java.awt.Color(102, 102, 102));
+        Aluno.setText("Aluno");
+        getContentPane().add(Aluno, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 250, -1, -1));
+
+        jtNota.setBackground(new java.awt.Color(0, 0, 0));
+        getContentPane().add(jtNota, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 440, 270, 40));
+
+        Nota.setFont(new java.awt.Font("League Spartan Black", 1, 36)); // NOI18N
+        Nota.setForeground(new java.awt.Color(102, 102, 102));
+        Nota.setText("Nota");
+        getContentPane().add(Nota, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 410, -1, -1));
+
+        jtAtividade.setBackground(new java.awt.Color(0, 0, 0));
+        getContentPane().add(jtAtividade, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 360, 270, 40));
+
+        Atividade.setFont(new java.awt.Font("League Spartan Black", 1, 36)); // NOI18N
+        Atividade.setForeground(new java.awt.Color(102, 102, 102));
+        Atividade.setText("Atividade");
+        getContentPane().add(Atividade, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 330, -1, -1));
+
+        AdicionarNota2.setBackground(new java.awt.Color(102, 102, 102));
+        AdicionarNota2.setFont(new java.awt.Font("League Spartan", 0, 14)); // NOI18N
+        AdicionarNota2.setText("Editar Nota");
+        AdicionarNota2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AdicionarNota2ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(AdicionarNota2, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 720, 130, 30));
+
+        AdicionarNota.setBackground(new java.awt.Color(102, 102, 102));
+        AdicionarNota.setFont(new java.awt.Font("League Spartan", 0, 14)); // NOI18N
+        AdicionarNota.setText("Adicionar Nota");
+        AdicionarNota.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AdicionarNotaActionPerformed(evt);
+            }
+        });
+        getContentPane().add(AdicionarNota, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 670, 130, 30));
+
+        AdicionarFalta1.setBackground(new java.awt.Color(102, 102, 102));
+        AdicionarFalta1.setFont(new java.awt.Font("League Spartan", 0, 14)); // NOI18N
+        AdicionarFalta1.setText("Adicionar Falta");
+        getContentPane().add(AdicionarFalta1, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 670, 130, 30));
+
+        jtNome.setBackground(new java.awt.Color(0, 0, 0));
+        getContentPane().add(jtNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 280, 270, 40));
+
+        jNome.setFont(new java.awt.Font("League Spartan ExtraBold", 0, 36)); // NOI18N
+        jNome.setForeground(new java.awt.Color(102, 102, 102));
+        jNome.setText("Caique Augusto");
+        getContentPane().add(jNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 60, -1, -1));
+
+        jtTabela.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "ID", "Aluno", "Atividade", "Notas", "Faltas"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jtTabela.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        jScrollPane1.setViewportView(jtTabela);
+
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(62, 230, 730, -1));
 
         IMAGEM.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rumoif/resources/ProfessorMateira.png"))); // NOI18N
         getContentPane().add(IMAGEM, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
+        jvoltar.setText("voltar");
+        jvoltar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jvoltarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jvoltar, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 700, 130, 40));
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jvoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jvoltarActionPerformed
+        // TODO add your handling code here:
+        Login login = new Login();
+        login.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jvoltarActionPerformed
+
+    private void AdicionarNotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AdicionarNotaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_AdicionarNotaActionPerformed
+
+    private void AdicionarNota1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AdicionarNota1ActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_AdicionarNota1ActionPerformed
+
+    private void AdicionarNota2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AdicionarNota2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_AdicionarNota2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -73,14 +293,27 @@ public class ProfessorMateria extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ProfessorMateria().setVisible(true);
+                new ProfessorMateria(materia,professor).setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton AdicionarFalta1;
+    private javax.swing.JButton AdicionarNota;
+    private javax.swing.JButton AdicionarNota1;
+    private javax.swing.JButton AdicionarNota2;
+    private javax.swing.JLabel Aluno;
+    private javax.swing.JLabel Atividade;
     private javax.swing.JLabel IMAGEM;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JSpinner jSpinner1;
+    private javax.swing.JLabel Nota;
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JLabel jNome;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField jtAtividade;
+    private javax.swing.JTextField jtNome;
+    private javax.swing.JTextField jtNota;
+    private javax.swing.JTable jtTabela;
+    private javax.swing.JButton jvoltar;
     // End of variables declaration//GEN-END:variables
 }

@@ -31,12 +31,12 @@ public class NotasDAO implements GenericDAO<Notas>{
         PreparedStatement stmt = null;
 
         try {
-            stmt = con.prepareStatement("INSERT INTO rumoif.faltas (id_materia, id_aluno, nota) VALUES (?,?,?)");
+            stmt = con.prepareStatement("INSERT INTO rumoif.faltas (id_materia, id_aluno, nota,atividade) VALUES (?,?,?,?)");
 
             stmt.setInt(1, n.getId_materia());
             stmt.setString(2, n.getId_aluno());
             stmt.setDouble(3, n.getNota());
-
+            stmt.setString(4, n.getAtividade());
             stmt.executeUpdate();
 
 
@@ -47,19 +47,21 @@ public class NotasDAO implements GenericDAO<Notas>{
         }
 
     }
-
+    
+    
+    //POLIMORFISMO
     public List<Notas> read(Aluno a) {
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        String sql = ("SELECT * FROM rumoif.notas WHERE id_aluno = ?");
+        String sql = ("SELECT * FROM rumoif.notas, rumoif.login WHERE id_aluno = ?");
         List<Notas> notas = new ArrayList<Notas>();
         try {
             stmt = con.prepareStatement(sql);
             stmt.setString(1, a.getUsuario());
             rs = stmt.executeQuery();
             while (rs.next()) {
-                Notas n = new Notas(rs.getInt("id_materia"), rs.getDouble("nota"));
+                Notas n = new Notas(rs.getInt("id_materia"), rs.getString("id_aluno"),rs.getDouble("nota"),rs.getString("atividade"));
                 notas.add(n);
             }
         } catch (SQLException ex) {
@@ -69,6 +71,7 @@ public class NotasDAO implements GenericDAO<Notas>{
         }
         return notas;
     }
+    //Tabela professor
     public List<Notas> read(Materia m) {
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
@@ -80,7 +83,7 @@ public class NotasDAO implements GenericDAO<Notas>{
             stmt.setInt(1, m.getId_materia());
             rs = stmt.executeQuery();
             while (rs.next()) {
-                Notas n = new Notas(rs.getString("id_aluno"), rs.getDouble("nota"));
+                Notas n = new Notas(rs.getInt("id_materia"), rs.getString("id_aluno"),rs.getDouble("nota"),rs.getString("atividade"));
                 notas.add(n);
             }
         } catch (SQLException ex) {

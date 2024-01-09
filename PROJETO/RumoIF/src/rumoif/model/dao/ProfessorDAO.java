@@ -58,7 +58,30 @@ public class ProfessorDAO implements GenericDAO<Professor>{
         }
         return professores;
     }
-
+    public Professor readUnit(Professor p) {
+        Connection con = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        Professor novo = p;
+        String sql = ("SELECT * FROM rumoif.login WHERE usuario = ? AND senha = ?");
+        try {
+            stmt = con.prepareStatement(sql);
+            stmt.setString(1, p.getUsuario());
+            stmt.setString(2, p.getSenha());
+            rs = stmt.executeQuery();
+            if (rs.next()) {
+                novo.setNome(rs.getString("nome"));
+                novo.setUsuario(rs.getString("usuario"));
+                novo.setEmail(rs.getString("email"));
+                novo.setSenha(rs.getString("senha"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProfessorDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            ConnectionFactory.closeConnection(con, stmt, rs);
+        }
+        return novo;
+    }
     public void update(Professor p) {
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;

@@ -4,6 +4,14 @@
  */
 package rumoif.view;
 
+import java.util.List;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
+import rumoif.model.bean.Materia;
+import rumoif.model.bean.Professor;
+import rumoif.model.dao.MateriaDAO;
+import rumoif.model.dao.ProfessorMateriaDAO;
+
 /**
  *
  * @author ADMIN
@@ -13,8 +21,13 @@ public class ProfessorS extends javax.swing.JFrame {
     /**
      * Creates new form ProfessorScreen
      */
-    public ProfessorS() {
+    static Professor professor;
+
+    public ProfessorS(Professor professor) {
         initComponents();
+        this.professor = professor;
+        preencherComboBox();
+        jNome.setText(professor.getNome());
     }
 
     /**
@@ -26,30 +39,20 @@ public class ProfessorS extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jNome = new javax.swing.JLabel();
         Selecionar = new javax.swing.JButton();
         jlista = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         IMAGEM = new javax.swing.JLabel();
+        jvoltar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null},
-                {null},
-                {null},
-                {null}
-            },
-            new String [] {
-                "Matéria(s)"
-            }
-        ));
-        jScrollPane1.setViewportView(jTable1);
-
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 220, 180, 180));
+        jNome.setFont(new java.awt.Font("League Spartan ExtraBold", 0, 36)); // NOI18N
+        jNome.setForeground(new java.awt.Color(255, 255, 255));
+        jNome.setText("Caique Augusto");
+        getContentPane().add(jNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 110, -1, -1));
 
         Selecionar.setBackground(new java.awt.Color(102, 102, 102));
         Selecionar.setFont(new java.awt.Font("League Spartan ExtraBold", 0, 18)); // NOI18N
@@ -60,18 +63,17 @@ public class ProfessorS extends javax.swing.JFrame {
                 SelecionarActionPerformed(evt);
             }
         });
-        getContentPane().add(Selecionar, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 290, 180, 30));
+        getContentPane().add(Selecionar, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 290, 290, 30));
 
         jlista.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jlista.setSelectedItem(jTable1);
         jlista.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jlistaActionPerformed(evt);
             }
         });
-        getContentPane().add(jlista, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, 180, -1));
+        getContentPane().add(jlista, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, 290, -1));
 
-        jLabel1.setFont(new java.awt.Font("League Spartan ExtraBold", 0, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("League Spartan ExtraBold", 0, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(204, 204, 204));
         jLabel1.setText("Matéria");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 220, -1, -1));
@@ -79,18 +81,56 @@ public class ProfessorS extends javax.swing.JFrame {
         IMAGEM.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rumoif/resources/Professor.png"))); // NOI18N
         getContentPane().add(IMAGEM, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
+        jvoltar.setText("voltar");
+        jvoltar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jvoltarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jvoltar, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 500, 150, 40));
+
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    public void preencherComboBox() {
+        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>(); // Modelo para o JComboBox
+
+        // Recupere os dados do banco de dados usando o DAO (substitua isso pelo seu código)
+        List<Materia> itensDoBanco = new ProfessorMateriaDAO().readUnit(professor);
+
+        // Adicione os itens da lista ao modelo do JComboBox
+        for (Materia item : itensDoBanco) {
+            model.addElement(item.getNome_materia());
+        }
+
+        jlista.setModel(model); // Atribua o modelo ao JComboBox
+    }
+
+    private Materia pegarMateria(String item) {
+        MateriaDAO materiaDAO = new MateriaDAO();
+        Materia materia = materiaDAO.read(item);
+        return materia;
+    }
     private void SelecionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SelecionarActionPerformed
         // TODO add your handling code here:
+
+        ProfessorMateria tela = new ProfessorMateria(pegarMateria((String)jlista.getSelectedItem()), professor);
+        this.dispose();
+        tela.setVisible(true);
     }//GEN-LAST:event_SelecionarActionPerformed
 
     private void jlistaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jlistaActionPerformed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_jlistaActionPerformed
+
+    private void jvoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jvoltarActionPerformed
+        // TODO add your handling code here:
+        Login login = new Login();
+        login.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jvoltarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -125,7 +165,7 @@ public class ProfessorS extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ProfessorS().setVisible(true);
+                new ProfessorS(professor).setVisible(true);
             }
         });
     }
@@ -134,8 +174,8 @@ public class ProfessorS extends javax.swing.JFrame {
     private javax.swing.JLabel IMAGEM;
     private javax.swing.JButton Selecionar;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JLabel jNome;
     private javax.swing.JComboBox<String> jlista;
+    private javax.swing.JButton jvoltar;
     // End of variables declaration//GEN-END:variables
 }

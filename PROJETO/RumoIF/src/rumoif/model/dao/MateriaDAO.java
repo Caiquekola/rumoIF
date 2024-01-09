@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import rumoif.model.bean.Professor;
 
 public class MateriaDAO implements GenericDAO<Materia>{
 
@@ -34,7 +35,27 @@ public class MateriaDAO implements GenericDAO<Materia>{
             ConnectionFactory.closeConnection(con, stmt);
         }
     }
-    
+    //Polimorfismo USADO na TABELA RELACAO ALUNO / MATERIA EM DIRETOR
+    public Materia read(String nomeMateria) {
+        Connection con = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        String sql = ("SELECT * FROM rumoif.materia WHERE nome_materia = ?");
+        Materia materia = null;
+        try {
+            stmt = con.prepareStatement(sql);
+            stmt.setString(1, nomeMateria);
+            rs = stmt.executeQuery();
+            if (rs.next()) {
+               materia = new Materia(rs.getString("nome_materia"),rs.getInt("id_materia"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProfessorMateriaDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            ConnectionFactory.closeConnection(con, stmt, rs);
+        }
+        return materia;
+    }
     public List<Materia> read() {
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;

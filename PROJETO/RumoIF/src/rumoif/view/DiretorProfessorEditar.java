@@ -204,6 +204,7 @@ public class DiretorProfessorEditar extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        jtTabela.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
         jtTabela.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jtTabelaMouseClicked(evt);
