@@ -4,9 +4,9 @@
  */
 
 package rumoif.model.bean;
+//A instanciação já define o nível de acesso como 0
 
-
-public class Aluno extends Usuario{
+public class Aluno extends Usuario{ //Herança simples
     //CRIAR ALUNO
     public Aluno(String nome, String email, String usuario, String senha) {
         super(nome, email, usuario, senha);

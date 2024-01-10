@@ -6,12 +6,12 @@
 package rumoif.model.bean;
 
 
-public class Materia {
+public class Materia { //Base para a identificação no banco de dados
     private int id_materia;
     private String nome_materia;
     
     //Usado no read
-    public Materia(String nome, int id_materia){
+    public Materia(String nome, int id_materia){ //Sobrecarga de método
         this.nome_materia = nome;
         this.id_materia = id_materia;
     }

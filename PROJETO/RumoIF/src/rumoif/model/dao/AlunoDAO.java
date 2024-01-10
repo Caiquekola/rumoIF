@@ -20,14 +20,14 @@ import rumoif.model.bean.AlunoMateria;
 import rumoif.model.bean.Materia;
 
 
-public class AlunoDAO implements GenericDAO<Aluno>{
+public class AlunoDAO implements GenericDAO<Aluno>{ //Implementa interface
  
     
-    public void create(Aluno u) {
-        Connection con = ConnectionFactory.getConnection();
-        PreparedStatement stmt = null;
+    public void create(Aluno u) { //Adapta Aluno para o banco de dados
+        Connection con = ConnectionFactory.getConnection(); //conecta com o banco de dados
+        PreparedStatement stmt = null; //Declara comando para o banco de dados
 
-        try {
+        try { //Prepara as instruções do banco de dados
             stmt = con.prepareStatement("INSERT INTO rumoif.login (nome,email,usuario,senha,nivel) VALUES (?,?,?,?,?)");
             
             stmt.setString(1, u.getNome());
@@ -39,14 +39,14 @@ public class AlunoDAO implements GenericDAO<Aluno>{
             stmt.executeUpdate();
             
             
-        } catch (SQLException ex) {
+        } catch (SQLException ex) { //Trata erro de manipulação no banco de dados
             Logger.getLogger(LoginDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
-            ConnectionFactory.closeConnection(con, stmt);
+            ConnectionFactory.closeConnection(con, stmt); //fecha a conexão com o banco de dados
         }
 
     }
-    public List<Aluno> read() {
+    public List<Aluno> read() { //Retorna uma lista com todos os alunos
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -54,7 +54,7 @@ public class AlunoDAO implements GenericDAO<Aluno>{
         List<Aluno> alunos = new ArrayList<>();
 
         try {
-            stmt = con.prepareStatement("SELECT * from rumoif.login WHERE nivel = 0");
+            stmt = con.prepareStatement("SELECT * from rumoif.login WHERE nivel = 0"); //Filtro para seleção de somente alunos
 
             rs = stmt.executeQuery();
 
@@ -101,7 +101,7 @@ public class AlunoDAO implements GenericDAO<Aluno>{
     }
     //Polimorfismo Professor Tabela
 
-    public List<Aluno> read(Materia m) {
+    public List<Aluno> read(Materia m) { //Retorna todos os alunos de uma determinada matéria
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -148,7 +148,7 @@ public class AlunoDAO implements GenericDAO<Aluno>{
         return alunon;
 
     }
-    public void update(Aluno a){
+    public void update(Aluno a){ //Atualizar os dados do Aluno
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
         String sql = ("UPDATE rumoif.login SET nome = ?, email = ?,senha = ? WHERE usuario = ? AND nivel = 0;");

@@ -26,7 +26,7 @@ import rumoif.model.bean.Notas;
 public class NotasDAO implements GenericDAO<Notas>{
     
     @Override
-    public void create(Notas n) {
+    public void create(Notas n) { //Método sobrecrito da interface
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
 
