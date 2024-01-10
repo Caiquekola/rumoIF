@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package rumoif.model.dao;
 
 import rumoif.connection.ConnectionFactory;
@@ -10,7 +6,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
-public class LoginDAO {
+public class LoginDAO { //Loga o usuário no sistema para acesso aos dados
  public int login(String usuario, String senha) {
         PreparedStatement stmt = null;
         Connection con = ConnectionFactory.getConnection();
