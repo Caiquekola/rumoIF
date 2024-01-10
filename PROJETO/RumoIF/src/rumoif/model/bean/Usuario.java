@@ -1,7 +1,7 @@
 package rumoif.model.bean;
-public abstract class Usuario {
+public abstract class Usuario { //Superclasse abstrata
     
-    private int nivel;
+    private int nivel; //nível de acesso ao sistema
     private String Usuario;
     private String email;
     private String senha;
