@@ -99,7 +99,9 @@ public class FaltasDAO implements GenericDAO<Faltas>{
         } catch (SQLException ex) {
             Logger.getLogger(FaltasDAO.class.getName()).log(Level.SEVERE, null, ex);
         } 
-        
+        if(quantidade<=0){
+            quantidade = 1;
+        }
         sql = ("UPDATE rumoif.faltas SET quantidade = ? WHERE id_aluno = ? AND id_materia = ?;");
         try {
             stmt = con.prepareStatement(sql);
@@ -119,7 +121,7 @@ public class FaltasDAO implements GenericDAO<Faltas>{
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        String sql = ("SELECT * FROM rumoif.faltas WHERE id_aluno = ?");
+        String sql = ("SELECT * FROM rumoif.faltas WHERE id_aluno = ? ORDER BY id_aluno");
         List<Faltas> faltas = new ArrayList<Faltas>();
         try {
             stmt = con.prepareStatement(sql);
@@ -140,7 +142,7 @@ public class FaltasDAO implements GenericDAO<Faltas>{
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        String sql = ("SELECT * FROM rumoif.faltas WHERE id_materia = ?");
+        String sql = ("SELECT * FROM rumoif.faltas WHERE id_materia = ? ORDER BY id_aluno");
         List<Faltas> faltas = new ArrayList<Faltas>();
         try {
             stmt = con.prepareStatement(sql);

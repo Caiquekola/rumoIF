@@ -26,7 +26,8 @@ import rumoif.model.bean.Notas;
 public class NotasDAO implements GenericDAO<Notas>{
     
     @Override
-    public void create(Notas n) { //Método sobrecrito da interface
+    public void create(Notas n) { 
+        //Método sobrecrito da interface
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
 
@@ -90,10 +91,10 @@ public class NotasDAO implements GenericDAO<Notas>{
             Logger.getLogger(FaltasDAO.class.getName()).log(Level.SEVERE, null, ex);
         } 
         
-        sql = ("UPDATE rumoif.notas SET nota = ? WHERE id_aluno = ? AND id_materia = ?;");
+        sql = ("UPDATE rumoif.notas SET nota = ? WHERE id_aluno = ? AND id_materia = ?; ");
         try {
             stmt = con.prepareStatement(sql);
-            stmt.setInt(1, (int) (notaNova+(nota)));
+            stmt.setDouble(1,  (notaNova+(nota)));
             stmt.setString(2,aluno);
             stmt.setInt(3, m.getId_materia());
             stmt.executeUpdate();
@@ -110,7 +111,7 @@ public class NotasDAO implements GenericDAO<Notas>{
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        String sql = ("SELECT * FROM rumoif.notas WHERE id_aluno = ?");
+        String sql = ("SELECT * FROM rumoif.notas WHERE id_aluno = ? ORDER BY id_aluno");
         List<Notas> notas = new ArrayList<Notas>();
         try {
             stmt = con.prepareStatement(sql);
@@ -132,7 +133,7 @@ public class NotasDAO implements GenericDAO<Notas>{
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        String sql = ("SELECT * FROM rumoif.notas WHERE id_materia = ?");
+        String sql = ("SELECT * FROM rumoif.notas WHERE id_materia = ? ORDER BY id_aluno");
         List<Notas> notas = new ArrayList<Notas>();
         try {
             stmt = con.prepareStatement(sql);
@@ -168,5 +169,25 @@ public class NotasDAO implements GenericDAO<Notas>{
         }
 
     }
-
+    public boolean editarNota(String aluno,double nota, Materia m ){
+        Connection con = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        boolean certo = false;
+        double notaNova = nota;
+        String sql = ("UPDATE rumoif.notas SET nota = ? WHERE id_aluno = ? AND id_materia = ?;");
+        try {
+            stmt = con.prepareStatement(sql);
+            stmt.setDouble(1, notaNova);
+            stmt.setString(2,aluno);
+            stmt.setInt(3, m.getId_materia());
+            stmt.executeUpdate();
+            certo = true;
+        } catch (SQLException ex) {
+            Logger.getLogger(FaltasDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally{
+            ConnectionFactory.closeConnection(con, stmt, rs);
+        }
+        return certo;
+    }
 }

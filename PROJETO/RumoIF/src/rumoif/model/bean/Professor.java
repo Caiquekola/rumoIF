@@ -1,7 +1,8 @@
 package rumoif.model.bean;
 
 
-public class Professor extends Usuario{ //Herança simples
+public class Professor extends Usuario{ 
+    //Herança simples
     //CRIAR PROFESSOR
     public Professor(String nome, String email, String usuario, String senha) {
         super(nome, email, usuario, senha);

@@ -4,11 +4,6 @@
  */
 package rumoif.model.bean;
 
-/**
- *
- * @author ADMIN
- * @param <T>
- */
 public interface GenericDAO<T> {
     void create(T objeto);
 }

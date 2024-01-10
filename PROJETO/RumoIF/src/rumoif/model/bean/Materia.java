@@ -6,7 +6,8 @@
 package rumoif.model.bean;
 
 
-public class Materia { //Base para a identificação no banco de dados
+public class Materia { 
+    //Base para a identificação no banco de dados
     private int id_materia;
     private String nome_materia;
     

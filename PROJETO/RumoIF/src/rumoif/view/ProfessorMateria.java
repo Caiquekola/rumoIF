@@ -151,7 +151,22 @@ public class ProfessorMateria extends javax.swing.JFrame {
         }
         readJTable();
     }
+     private void editarNota() {
+        if (obterAluno().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Preencha o campo Aluno!");
+        } else if (obterNota()<=0) {
+            JOptionPane.showMessageDialog(null, "Preencha o campo Nota!");
 
+        } else if (AlunoExiste(obterAluno())) {
+            NotasDAO notasDao = new NotasDAO();
+            if (notasDao.editarNota(obterAluno(), obterNota(), materia)) {
+                JOptionPane.showMessageDialog(null, "Nota edita com êxito!", "Nota edita", JOptionPane.QUESTION_MESSAGE);
+
+            }
+
+        }
+        readJTable();
+    }
     private void adicionarFalta() {
         if (obterAluno().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Preencha o campo Aluno!");
@@ -194,8 +209,9 @@ public class ProfessorMateria extends javax.swing.JFrame {
         Nota = new javax.swing.JLabel();
         EditarNota = new javax.swing.JButton();
         AdicionarNota = new javax.swing.JButton();
-        AdicionarFalta1 = new javax.swing.JButton();
+        RemoverFalta = new javax.swing.JButton();
         jtIDAluno = new javax.swing.JTextField();
+        AdicionarFalta2 = new javax.swing.JButton();
         jlNomeMateria = new javax.swing.JLabel();
         jNomeProfessor = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -229,7 +245,7 @@ public class ProfessorMateria extends javax.swing.JFrame {
                 EditarNotaActionPerformed(evt);
             }
         });
-        getContentPane().add(EditarNota, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 670, 140, 30));
+        getContentPane().add(EditarNota, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 710, 140, 30));
 
         AdicionarNota.setBackground(new java.awt.Color(204, 204, 204));
         AdicionarNota.setFont(new java.awt.Font("League Spartan", 0, 18)); // NOI18N
@@ -240,22 +256,33 @@ public class ProfessorMateria extends javax.swing.JFrame {
                 AdicionarNotaActionPerformed(evt);
             }
         });
-        getContentPane().add(AdicionarNota, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 670, 140, 30));
+        getContentPane().add(AdicionarNota, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 670, 140, 30));
 
-        AdicionarFalta1.setBackground(new java.awt.Color(204, 204, 204));
-        AdicionarFalta1.setFont(new java.awt.Font("League Spartan", 0, 18)); // NOI18N
-        AdicionarFalta1.setForeground(new java.awt.Color(51, 51, 51));
-        AdicionarFalta1.setText("Adicionar Falta");
-        AdicionarFalta1.addActionListener(new java.awt.event.ActionListener() {
+        RemoverFalta.setBackground(new java.awt.Color(204, 204, 204));
+        RemoverFalta.setFont(new java.awt.Font("League Spartan", 0, 18)); // NOI18N
+        RemoverFalta.setForeground(new java.awt.Color(51, 51, 51));
+        RemoverFalta.setText("Remover Falta");
+        RemoverFalta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                AdicionarFalta1ActionPerformed(evt);
+                RemoverFaltaActionPerformed(evt);
             }
         });
-        getContentPane().add(AdicionarFalta1, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 670, 150, 30));
+        getContentPane().add(RemoverFalta, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 710, 150, 30));
 
         jtIDAluno.setBackground(new java.awt.Color(0, 0, 0));
         jtIDAluno.setForeground(new java.awt.Color(255, 255, 255));
         getContentPane().add(jtIDAluno, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 280, 270, 40));
+
+        AdicionarFalta2.setBackground(new java.awt.Color(204, 204, 204));
+        AdicionarFalta2.setFont(new java.awt.Font("League Spartan", 0, 18)); // NOI18N
+        AdicionarFalta2.setForeground(new java.awt.Color(51, 51, 51));
+        AdicionarFalta2.setText("Adicionar Falta");
+        AdicionarFalta2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AdicionarFalta2ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(AdicionarFalta2, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 670, 150, 30));
 
         jlNomeMateria.setFont(new java.awt.Font("League Spartan ExtraBold", 0, 36)); // NOI18N
         jlNomeMateria.setForeground(new java.awt.Color(255, 153, 102));
@@ -328,7 +355,7 @@ public class ProfessorMateria extends javax.swing.JFrame {
 
     private void EditarNotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditarNotaActionPerformed
         // TODO add your handling code here:
-
+        editarNota();
     }//GEN-LAST:event_EditarNotaActionPerformed
 
     private void jtTabelaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtTabelaMouseClicked
@@ -340,10 +367,15 @@ public class ProfessorMateria extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jtTabelaMouseReleased
 
-    private void AdicionarFalta1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AdicionarFalta1ActionPerformed
+    private void RemoverFaltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RemoverFaltaActionPerformed
+        // TODO add your handling code here:
+        removerFalta();
+    }//GEN-LAST:event_RemoverFaltaActionPerformed
+
+    private void AdicionarFalta2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AdicionarFalta2ActionPerformed
         // TODO add your handling code here:
         adicionarFalta();
-    }//GEN-LAST:event_AdicionarFalta1ActionPerformed
+    }//GEN-LAST:event_AdicionarFalta2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -381,12 +413,13 @@ public class ProfessorMateria extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton AdicionarFalta1;
+    private javax.swing.JButton AdicionarFalta2;
     private javax.swing.JButton AdicionarNota;
     private javax.swing.JLabel Aluno;
     private javax.swing.JButton EditarNota;
     private javax.swing.JLabel IMAGEM;
     private javax.swing.JLabel Nota;
+    private javax.swing.JButton RemoverFalta;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel jNomeProfessor;
     private javax.swing.JScrollPane jScrollPane1;

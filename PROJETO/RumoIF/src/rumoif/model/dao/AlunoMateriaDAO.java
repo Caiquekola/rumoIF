@@ -15,7 +15,8 @@ import rumoif.model.bean.Aluno;
 import rumoif.model.bean.AlunoMateria;
 import rumoif.model.bean.Materia;
 
-public class AlunoMateriaDAO implements GenericDAO<AlunoMateria>{ //Implementa interface
+public class AlunoMateriaDAO implements GenericDAO<AlunoMateria>{ 
+    //Implementa interface
     @Override
     public void create(AlunoMateria alunoMateria){ //Método herdado da interface
         Connection con = ConnectionFactory.getConnection();

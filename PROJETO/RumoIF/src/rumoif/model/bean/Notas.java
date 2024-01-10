@@ -1,9 +1,8 @@
 package rumoif.model.bean;
 
-/**
- * @author Caio Rievers
- */
-public class Notas { //Base para o banco de dados
+
+public class Notas { 
+    //Base para o banco de dados
     
     private int id_materia;
     private String id_aluno;

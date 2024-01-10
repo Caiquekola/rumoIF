@@ -16,11 +16,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import rumoif.connection.ConnectionFactory;
 import rumoif.model.bean.Aluno;
-import rumoif.model.bean.AlunoMateria;
 import rumoif.model.bean.Materia;
 
 
-public class AlunoDAO implements GenericDAO<Aluno>{ //Implementa interface
+public class AlunoDAO implements GenericDAO<Aluno>{ 
+    //Implementa interface
  
     
     public void create(Aluno u) { //Adapta Aluno para o banco de dados
@@ -54,7 +54,7 @@ public class AlunoDAO implements GenericDAO<Aluno>{ //Implementa interface
         List<Aluno> alunos = new ArrayList<>();
 
         try {
-            stmt = con.prepareStatement("SELECT * from rumoif.login WHERE nivel = 0"); //Filtro para seleção de somente alunos
+            stmt = con.prepareStatement("SELECT * from rumoif.login WHERE nivel = 0 ORDER BY id_aluno" ); //Filtro para seleção de somente alunos
 
             rs = stmt.executeQuery();
 
@@ -109,7 +109,7 @@ public class AlunoDAO implements GenericDAO<Aluno>{ //Implementa interface
         Aluno alunon = null;
         List<Aluno> alunos = new ArrayList<>();
         try {
-            stmt = con.prepareStatement("SELECT l.nome FROM rumoif.login l JOIN rumoif.notas n ON l.usuario = n.id_aluno WHERE n.id_materia = ?");
+            stmt = con.prepareStatement("SELECT l.nome FROM rumoif.login l JOIN rumoif.notas n ON l.usuario = n.id_aluno WHERE n.id_materia = ? ORDER BY id_aluno");
             stmt.setInt(1,m.getId_materia());
             rs = stmt.executeQuery();
 
