@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package rumoif.model.dao;
 
 import rumoif.model.bean.GenericDAO;
@@ -56,7 +52,7 @@ public class MateriaDAO implements GenericDAO<Materia>{
         }
         return materia;
     }
-    public List<Materia> read() {
+    public List<Materia> read() { //Retorna todas as matérias no banco de dados
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -77,7 +73,7 @@ public class MateriaDAO implements GenericDAO<Materia>{
         return materias;
     }
     
-    public void update(Materia m) {
+    public void update(Materia m) { //Muda o nome da matéria no banco de dados
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
         String sql = ("UPDATE rumoif.materia SET nome_materia = ? WHERE id_materia = ?");
