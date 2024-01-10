@@ -1,14 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package rumoif.model.bean;
 
 /**
- *
  * @author Caio Rievers
  */
-public class Notas {
+public class Notas { //Base para o banco de dados
     
     private int id_materia;
     private String id_aluno;
