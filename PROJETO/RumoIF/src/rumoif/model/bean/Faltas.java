@@ -10,15 +10,21 @@ public class Faltas {
         this.id_materia = id_materia;
         this.quantidade = quantidade;
     }
-
+    //Read do FaltasDAO com ALUNO!
     public Faltas(int id_materia, int quantidade) {
         this.id_materia = id_materia;
         this.quantidade = quantidade;
     }
-
+    //Read do FaltasDAO com materia
     public Faltas(String id_aluno, int quantidade) {
-        this.id_aluno = id_aluno;
+        this.id_materia = id_materia;
         this.quantidade = quantidade;
+    }
+    //Utilizado na criação do aluno em diretor diretamente com faltas
+    public Faltas(String id_aluno, Materia m) {
+        this.id_aluno = id_aluno;
+        this.quantidade = 0;
+        this.id_materia = m.getId_materia();
     }
     
     

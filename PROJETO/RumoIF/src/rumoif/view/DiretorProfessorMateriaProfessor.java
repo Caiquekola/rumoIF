@@ -38,8 +38,7 @@ public class DiretorProfessorMateriaProfessor extends javax.swing.JFrame {
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 
-                            adicionar(obterMateria(),obterProfessor());
-
+                    adicionar(obterMateria(), obterProfessor());
 
                 }
             }
@@ -50,8 +49,7 @@ public class DiretorProfessorMateriaProfessor extends javax.swing.JFrame {
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 
-                            adicionar(obterMateria(),obterProfessor());
-
+                    adicionar(obterMateria(), obterProfessor());
 
                 }
             }
@@ -127,7 +125,7 @@ public class DiretorProfessorMateriaProfessor extends javax.swing.JFrame {
                 jtMateriaActionPerformed(evt);
             }
         });
-        getContentPane().add(jtMateria, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 390, 200, 40));
+        getContentPane().add(jtMateria, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 320, 200, 40));
 
         jtTabela.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -158,7 +156,7 @@ public class DiretorProfessorMateriaProfessor extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jtTabela);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 300, 230, 200));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 200, 380, 120));
 
         jtProfessor.setBackground(new java.awt.Color(0, 0, 0));
         jtProfessor.setFont(new java.awt.Font("League Spartan ExtraBold", 0, 18)); // NOI18N
@@ -168,7 +166,7 @@ public class DiretorProfessorMateriaProfessor extends javax.swing.JFrame {
                 jtProfessorActionPerformed(evt);
             }
         });
-        getContentPane().add(jtProfessor, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 300, 200, 40));
+        getContentPane().add(jtProfessor, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 230, 200, 40));
 
         Adicionar.setBackground(new java.awt.Color(55, 0, 153));
         Adicionar.setFont(new java.awt.Font("League Spartan ExtraBold", 0, 14)); // NOI18N
@@ -178,17 +176,17 @@ public class DiretorProfessorMateriaProfessor extends javax.swing.JFrame {
                 AdicionarActionPerformed(evt);
             }
         });
-        getContentPane().add(Adicionar, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 470, -1, 30));
+        getContentPane().add(Adicionar, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 400, -1, 30));
 
         Nome1.setFont(new java.awt.Font("League Spartan Black", 0, 36)); // NOI18N
         Nome1.setForeground(new java.awt.Color(255, 255, 255));
         Nome1.setText("Matéria");
-        getContentPane().add(Nome1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 360, -1, -1));
+        getContentPane().add(Nome1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 290, -1, -1));
 
         Nome.setFont(new java.awt.Font("League Spartan Black", 0, 28)); // NOI18N
         Nome.setForeground(new java.awt.Color(255, 255, 255));
         Nome.setText("Professor (R.A)");
-        getContentPane().add(Nome, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 270, 200, -1));
+        getContentPane().add(Nome, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, 200, -1));
 
         Imagem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rumoif/resources/DiretorProfessorMateria.png"))); // NOI18N
         getContentPane().add(Imagem, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -210,6 +208,8 @@ public class DiretorProfessorMateriaProfessor extends javax.swing.JFrame {
         PreparedStatement stmt = null;
         ResultSet rs = null;
         boolean existe = false;
+        boolean existe2 = false;
+        
         String sql = ("SELECT * FROM rumoif.materia WHERE nome_materia = ?");
         try {
             stmt = con.prepareStatement(sql);
@@ -218,11 +218,10 @@ public class DiretorProfessorMateriaProfessor extends javax.swing.JFrame {
             rs = stmt.executeQuery();
             if (rs.next()) {
                 existe = true;
+                
             }
         } catch (SQLException ex) {
             Logger.getLogger(DiretorProfessorMateriaProfessor.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            ConnectionFactory.closeConnection(con, stmt);
         }
         sql = ("SELECT * FROM rumoif.login WHERE usuario = ?");
         try {
@@ -230,20 +229,21 @@ public class DiretorProfessorMateriaProfessor extends javax.swing.JFrame {
             stmt.setString(1, p);
 
             rs = stmt.executeQuery();
-            if (!(rs.next())) {
-                existe = false;
+            if (rs.next()) {
+                existe2 = true;
             }
         } catch (SQLException ex) {
             Logger.getLogger(DiretorProfessorMateriaProfessor.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
-            ConnectionFactory.closeConnection(con, stmt);
+            ConnectionFactory.closeConnection(con, stmt, rs);
         }
 
-        return existe;
+        return existe2 & existe;
     }
 
     private Materia obterMateria() {
-        Materia m = new Materia(jtMateria.getText());
+        MateriaDAO mDao = new MateriaDAO();
+        Materia m = mDao.read(jtMateria.getText());
         return m;
     }
 
@@ -251,30 +251,38 @@ public class DiretorProfessorMateriaProfessor extends javax.swing.JFrame {
         String professorRa = jtProfessor.getText();
         return professorRa;
     }
-    private void adicionarRelacao(Materia m, String p){
+
+    private boolean adicionarRelacao(Materia m, String p) {
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
         String sql = ("INSERT INTO rumoif.professor_materia (id_professor,id_materia) VALUES (?,?)");
+        boolean certo = false;
         try {
             stmt = con.prepareStatement(sql);
-            stmt.setInt(2, m.getId_materia());
             stmt.setString(1, p);
+            stmt.setInt(2, m.getId_materia());
+            stmt.executeUpdate();
+            certo = true;
         } catch (SQLException ex) {
             Logger.getLogger(DiretorProfessorMateriaProfessor.class.getName()).log(Level.SEVERE, null, ex);
-        } finally{
-            ConnectionFactory.closeConnection(con,stmt);
+        } finally {
+            ConnectionFactory.closeConnection(con, stmt);
         }
-        
-        
+
+        return certo;
     }
+
     private void adicionar(Materia m, String p) {
         if (jtMateria.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Preencha o campo Matéria!");
         } else if (jtProfessor.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Preencha o campo Professor!");
 
-        }else if(materiaProfessorExiste(obterMateria(),obterProfessor())){
-            adicionarRelacao(obterMateria(),obterProfessor());
+        } else if (materiaProfessorExiste(obterMateria(), obterProfessor())) {
+                adicionarRelacao(obterMateria(),p);
+                JOptionPane.showMessageDialog(this, "Relação criada com êxito!");
+
+            
         }
         readJTable();
 
@@ -288,17 +296,17 @@ public class DiretorProfessorMateriaProfessor extends javax.swing.JFrame {
 
     private void AdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AdicionarActionPerformed
         // TODO add your handling code here:
-        adicionar(obterMateria(),obterProfessor());
+        adicionar(obterMateria(), obterProfessor());
     }//GEN-LAST:event_AdicionarActionPerformed
 
     private void jtTabelaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtTabelaMouseClicked
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_jtTabelaMouseClicked
 
     private void jtTabelaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtTabelaMousePressed
         // TODO add your handling code here
-        
+
     }//GEN-LAST:event_jtTabelaMousePressed
 
     private void jtMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtMateriaActionPerformed

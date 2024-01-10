@@ -13,28 +13,25 @@ public class Notas {
     private int id_materia;
     private String id_aluno;
     private double nota;
-    private String atividade;
     //criação dao
-    public Notas(int id_materia, String id_aluno, double nota,String atividade) {
+    public Notas(int id_materia, String id_aluno, double nota) {
         this.id_materia = id_materia;
         this.id_aluno = id_aluno;
         this.nota = nota;
-        this.atividade = atividade;
     }
-
+    //criação materia dao
+    public Notas(String s,Materia m) {
+        this.id_materia = m.getId_materia();
+        this.id_aluno = s;
+        this.nota = 0;
+    }
     //read dao
     public Notas(String id_aluno, double nota) {
         this.id_aluno = id_aluno;
         this.nota = nota;
     }
 
-    public String getAtividade() {
-        return atividade;
-    }
-
-    public void setAtividade(String atividade) {
-        this.atividade = atividade;
-    }
+    
     
     public int getId_materia() {
         return id_materia;

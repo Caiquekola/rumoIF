@@ -86,7 +86,7 @@ public class DiretorProfessor extends javax.swing.JFrame {
                 jbMateriaActionPerformed(evt);
             }
         });
-        getContentPane().add(jbMateria, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 260, 220, 60));
+        getContentPane().add(jbMateria, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 340, 220, 60));
 
         Imagem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rumoif/resources/DiretorProfessor.png"))); // NOI18N
         getContentPane().add(Imagem, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));

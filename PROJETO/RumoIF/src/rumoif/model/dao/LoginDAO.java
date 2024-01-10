@@ -17,8 +17,10 @@ public class LoginDAO {
         ResultSet rs = null;
         int nivel = -1;
         try {
-            String sql = "SELECT nivel FROM rumoif.login WHERE usuario = '" + usuario + "' AND senha = '" + senha + "'";
+            String sql = "SELECT * FROM rumoif.login WHERE usuario = ? AND senha = ?";
             stmt = con.prepareStatement(sql);
+            stmt.setString(1, usuario);
+            stmt.setString(2, senha);
             rs = stmt.executeQuery();
 
             if (rs.next()) {

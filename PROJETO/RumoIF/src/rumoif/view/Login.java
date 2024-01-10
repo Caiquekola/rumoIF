@@ -65,6 +65,7 @@ public class Login extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jtUsuario.setFont(new java.awt.Font("League Spartan", 0, 14)); // NOI18N
         jtUsuario.setCaretColor(new java.awt.Color(70, 73, 75));
         jtUsuario.setDisabledTextColor(new java.awt.Color(70, 73, 75));
         jtUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -75,8 +76,10 @@ public class Login extends javax.swing.JFrame {
                 jtUsuarioMouseExited(evt);
             }
         });
-        getContentPane().add(jtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 290, 230, -1));
-        getContentPane().add(jpSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 370, 230, -1));
+        getContentPane().add(jtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 290, 230, 30));
+
+        jpSenha.setFont(new java.awt.Font("League Spartan", 0, 14)); // NOI18N
+        getContentPane().add(jpSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 370, 230, 30));
 
         jbEntrar.setBackground(new java.awt.Color(255, 204, 0));
         jbEntrar.setFont(new java.awt.Font("Glacial Indifference", 1, 14)); // NOI18N
@@ -269,7 +272,6 @@ public class Login extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JButton jbEntrar;
-    private javax.swing.JButton jbEntrar1;
     private javax.swing.JPasswordField jpSenha;
     private javax.swing.JTextField jtUsuario;
     // End of variables declaration//GEN-END:variables

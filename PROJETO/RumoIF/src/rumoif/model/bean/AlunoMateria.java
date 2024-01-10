@@ -11,9 +11,9 @@ public class AlunoMateria {
     private int id_materia;
     private String id_aluno;
     
-    public AlunoMateria(Aluno aluno, Materia materia){
-        this.id_aluno = aluno.getUsuario();
-        this.id_materia = materia.getId_materia();
+    public AlunoMateria(int idM, String idA){
+        this.id_aluno = idA;
+        this.id_materia = idM;
     }
 
     public String getId_aluno() {

@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import rumoif.connection.ConnectionFactory;
 import rumoif.model.bean.Aluno;
 import rumoif.model.bean.Materia;
@@ -30,10 +31,9 @@ public class FaltasDAO implements GenericDAO<Faltas>{
 
             stmt.setInt(1, f.getId_materia());
             stmt.setString(2, f.getId_aluno());
-            stmt.setInt(3, f.getQuantidade());
+            stmt.setInt(3, 0);
 
             stmt.executeUpdate();
-
 
         } catch (SQLException ex) {
             Logger.getLogger(FaltasDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -42,7 +42,43 @@ public class FaltasDAO implements GenericDAO<Faltas>{
         }
 
     }
-
+    //Tabela de professores
+    public boolean acrescentarFalta(String aluno, Materia m){
+        Connection con = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        Boolean certo = false;
+        int quantidade = 0;
+        //Pegar a quantidade de faltas
+        String sql = ("SELECT * FROM rumoif.faltas WHERE id_aluno = ? AND id_materia = ?");
+        try {
+            stmt = con.prepareStatement(sql);
+            stmt.setString(1, aluno);
+            stmt.setInt(2,m.getId_materia());
+            rs = stmt.executeQuery();
+            if (rs.next()) {
+                quantidade = rs.getInt("quantidade");
+                certo = true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(FaltasDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        
+        sql = ("UPDATE rumoif.faltas SET quantidade = ? WHERE id_aluno = ? AND id_materia = ?;");
+        try {
+            stmt = con.prepareStatement(sql);
+            stmt.setInt(1, quantidade+1);
+            stmt.setString(2,aluno);
+            stmt.setInt(3, m.getId_materia());
+            stmt.executeUpdate();
+            certo = true;
+        } catch (SQLException ex) {
+            Logger.getLogger(FaltasDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally{
+            ConnectionFactory.closeConnection(con, stmt, rs);
+        }
+        return certo;
+    }
     public List<Faltas> read(Aluno a) {
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;

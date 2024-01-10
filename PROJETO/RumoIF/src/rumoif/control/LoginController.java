@@ -11,6 +11,7 @@ public class LoginController {
     
     public int loginUsuario(Login view) throws SQLException{
         LoginDAO login = new LoginDAO();
+        System.out.println(login.login((view.getjTextField1().getText()), view.getjPasswordField1().getText()));
         return login.login((view.getjTextField1().getText()), view.getjPasswordField1().getText());
     }
     public Professor nomeProfessor(Login view) throws SQLException{

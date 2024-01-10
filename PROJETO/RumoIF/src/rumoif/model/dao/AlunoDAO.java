@@ -16,6 +16,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import rumoif.connection.ConnectionFactory;
 import rumoif.model.bean.Aluno;
+import rumoif.model.bean.AlunoMateria;
+import rumoif.model.bean.Materia;
 
 
 public class AlunoDAO implements GenericDAO<Aluno>{
@@ -83,7 +85,7 @@ public class AlunoDAO implements GenericDAO<Aluno>{
             stmt.setString(1,usuario);
             rs = stmt.executeQuery();
 
-            if (rs.next()) {
+            while (rs.next()) {
                 alunon = new Aluno(rs.getString("nome"), rs.getString("email"),
                         rs.getString("usuario"), rs.getString("senha"));
                 
@@ -95,6 +97,34 @@ public class AlunoDAO implements GenericDAO<Aluno>{
             ConnectionFactory.closeConnection(con, stmt, rs);
         }
         return alunon;
+
+    }
+    //Polimorfismo Professor Tabela
+
+    public List<Aluno> read(Materia m) {
+        Connection con = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        Aluno alunon = null;
+        List<Aluno> alunos = new ArrayList<>();
+        try {
+            stmt = con.prepareStatement("SELECT l.nome,l.usuario,l.email,l.senha FROM rumoif.login l JOIN rumoif.aluno_materia am ON l.usuario = am.id_aluno WHERE am.id_materia = ?");
+            stmt.setInt(1,m.getId_materia());
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                alunon = new Aluno(rs.getString("nome"), rs.getString("email"),
+                        rs.getString("usuario"), rs.getString("senha"));
+                alunos.add(alunon);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(AlunoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            ConnectionFactory.closeConnection(con, stmt, rs);
+        }
+        return alunos;
 
     }
     public void update(Aluno a){

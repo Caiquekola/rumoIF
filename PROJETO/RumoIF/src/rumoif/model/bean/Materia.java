@@ -16,7 +16,7 @@ public class Materia {
         this.id_materia = id_materia;
     }
     
-    //criação de materia
+    //criação de materia e obtenção só com o nome
     public Materia(String nome){
         this.nome_materia = nome;
     }

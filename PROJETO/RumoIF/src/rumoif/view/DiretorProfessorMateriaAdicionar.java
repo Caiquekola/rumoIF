@@ -228,6 +228,10 @@ public class DiretorProfessorMateriaAdicionar extends javax.swing.JFrame {
         Materia m = new Materia(jtMateria.getText());
         return m;
     }
+    private Materia obterCamposADD(){
+        Materia m = new Materia(jtMateria.getText().toUpperCase());
+        return m;
+    }
     private void remover(Materia m){
         if(materiaExiste(m)){
             MateriaDAO mdao = new MateriaDAO();
@@ -267,7 +271,7 @@ public class DiretorProfessorMateriaAdicionar extends javax.swing.JFrame {
 
     private void AdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AdicionarActionPerformed
         // TODO add your handling code here:
-        adicionar(obterCampos());
+        adicionar(obterCamposADD());
     }//GEN-LAST:event_AdicionarActionPerformed
 
     private void RemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RemoverActionPerformed

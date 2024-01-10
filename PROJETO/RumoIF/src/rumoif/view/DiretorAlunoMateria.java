@@ -19,8 +19,12 @@ import javax.swing.table.TableRowSorter;
 import rumoif.connection.ConnectionFactory;
 import rumoif.model.bean.Materia;
 import rumoif.model.bean.Aluno;
+import rumoif.model.bean.Faltas;
+import rumoif.model.bean.Notas;
 import rumoif.model.dao.MateriaDAO;
 import rumoif.model.dao.AlunoDAO;
+import rumoif.model.dao.FaltasDAO;
+import rumoif.model.dao.NotasDAO;
 
 /**
  *
@@ -76,23 +80,20 @@ public class DiretorAlunoMateria extends javax.swing.JFrame {
         for (int i = 0; i < maxSize; i++) {
             Object[] rowData = new Object[3]; // Array para armazenar dados de uma linha
 
-            // Adiciona dados da matéria se existir na posição 'i' da lista de matérias
+            if (i < alunos.size()) {
+                Aluno professor = alunos.get(i);
+                rowData[0] = professor.getUsuario();
+            }
+            if (i < alunos.size()) {
+                Aluno professor = alunos.get(i);
+                rowData[1] = professor.getNome();
+            }
             if (i < materias.size()) {
                 Materia materia = materias.get(i);
-                rowData[0] = materia.getNome_materia();
+                rowData[2] = materia.getNome_materia();
             }
-
-            // Adiciona dados do professor se existir na posição 'i' da lista de alunos
-            if (i < alunos.size()) {
-                Aluno professor = alunos.get(i);
-                rowData[1] = professor.getUsuario();
-            }
-            if (i < alunos.size()) {
-                Aluno professor = alunos.get(i);
-                rowData[2] = professor.getNome();
-            }
-
-            modelo.addRow(rowData); // Adiciona a linha ao modelo da tabela
+            
+            modelo.addRow(rowData);
         }
     }
 
@@ -148,8 +149,9 @@ public class DiretorAlunoMateria extends javax.swing.JFrame {
         String sql = ("INSERT INTO rumoif.aluno_materia (id_aluno,id_materia) VALUES (?,?)");
         try {
             stmt = con.prepareStatement(sql);
-            stmt.setInt(2, m.getId_materia());
             stmt.setString(1, p);
+            stmt.setInt(2, m.getId_materia());
+            stmt.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(DiretorAlunoMateria.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
@@ -157,7 +159,14 @@ public class DiretorAlunoMateria extends javax.swing.JFrame {
         }
 
     }
-
+    private void materia(){
+        Faltas f = new Faltas(obterAluno(),obterMateria());
+        FaltasDAO fDao = new FaltasDAO();
+        fDao.create(f);
+        Notas n= new Notas(obterAluno(),obterMateria());
+        NotasDAO nDao = new NotasDAO();
+        nDao.create(n);
+    }
     private void adicionar(Materia m, String p) {
         if (jtMateria.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Preencha o campo Matéria!");
@@ -165,6 +174,7 @@ public class DiretorAlunoMateria extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Preencha o campo Aluno!");
 
         } else if (materiaAlunoExiste(obterMateria(), obterAluno())) {
+            materia();
             adicionarRelacao(obterMateria(), obterAluno());
             JOptionPane.showMessageDialog(null, "Aluno inserido na matéria","Aluno inserido",JOptionPane.QUESTION_MESSAGE);
 
@@ -204,7 +214,7 @@ public class DiretorAlunoMateria extends javax.swing.JFrame {
                 {null, null, null}
             },
             new String [] {
-                "Matéria", "Professor", "Nome"
+                "Usuário", "Nome", "Matéria"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -225,7 +235,7 @@ public class DiretorAlunoMateria extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jtTabela);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 300, 230, 200));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 200, 460, 150));
 
         jtAluno.setBackground(new java.awt.Color(0, 0, 0));
         jtAluno.setFont(new java.awt.Font("League Spartan ExtraBold", 0, 18)); // NOI18N
@@ -235,17 +245,17 @@ public class DiretorAlunoMateria extends javax.swing.JFrame {
                 jtAlunoActionPerformed(evt);
             }
         });
-        getContentPane().add(jtAluno, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 300, 200, 40));
+        getContentPane().add(jtAluno, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 230, 200, 40));
 
         Nome.setFont(new java.awt.Font("League Spartan Black", 0, 28)); // NOI18N
         Nome.setForeground(new java.awt.Color(255, 255, 255));
         Nome.setText("Aluno (R.A)");
-        getContentPane().add(Nome, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 270, 200, -1));
+        getContentPane().add(Nome, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 200, 200, -1));
 
         Nome1.setFont(new java.awt.Font("League Spartan Black", 0, 36)); // NOI18N
         Nome1.setForeground(new java.awt.Color(255, 255, 255));
         Nome1.setText("Matéria");
-        getContentPane().add(Nome1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 360, -1, -1));
+        getContentPane().add(Nome1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 290, -1, -1));
 
         jtMateria.setBackground(new java.awt.Color(0, 0, 0));
         jtMateria.setFont(new java.awt.Font("League Spartan ExtraBold", 0, 18)); // NOI18N
@@ -255,7 +265,7 @@ public class DiretorAlunoMateria extends javax.swing.JFrame {
                 jtMateriaActionPerformed(evt);
             }
         });
-        getContentPane().add(jtMateria, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 390, 200, 40));
+        getContentPane().add(jtMateria, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 320, 200, 40));
 
         Adicionar.setBackground(new java.awt.Color(55, 0, 153));
         Adicionar.setFont(new java.awt.Font("League Spartan ExtraBold", 0, 14)); // NOI18N
@@ -265,7 +275,7 @@ public class DiretorAlunoMateria extends javax.swing.JFrame {
                 AdicionarActionPerformed(evt);
             }
         });
-        getContentPane().add(Adicionar, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 470, -1, 30));
+        getContentPane().add(Adicionar, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 400, -1, 30));
 
         Imagem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rumoif/resources/DiretorAluno.png"))); // NOI18N
         getContentPane().add(Imagem, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));

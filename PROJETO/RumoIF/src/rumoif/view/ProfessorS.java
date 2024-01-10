@@ -66,6 +66,7 @@ public class ProfessorS extends javax.swing.JFrame {
         getContentPane().add(Selecionar, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 290, 290, 30));
 
         jlista.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jlista.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jlista.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jlistaActionPerformed(evt);
@@ -92,7 +93,7 @@ public class ProfessorS extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
+    
     public void preencherComboBox() {
         DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>(); // Modelo para o JComboBox
 
@@ -106,12 +107,13 @@ public class ProfessorS extends javax.swing.JFrame {
 
         jlista.setModel(model); // Atribua o modelo ao JComboBox
     }
-
+    
     private Materia pegarMateria(String item) {
         MateriaDAO materiaDAO = new MateriaDAO();
         Materia materia = materiaDAO.read(item);
         return materia;
     }
+    
     private void SelecionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SelecionarActionPerformed
         // TODO add your handling code here:
 
