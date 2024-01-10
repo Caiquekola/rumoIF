@@ -59,4 +59,29 @@ public class AlunoMateriaDAO implements GenericDAO<AlunoMateria>{
         }
         return materias;
     }
+    public List<Materia> read(Aluno aluno){
+        Connection con = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        String sql = ("SELECT m.id_materia, m.nome_materia "
+                + "FROM rumoif.materia m "
+                + "JOIN rumoif.aluno_materia am "
+                + "ON m.id_materia = am.id_materia "
+                + "WHERE am.id_aluno = ?");
+        List<Materia> materias = new ArrayList<>();
+        try {
+            stmt = con.prepareStatement(sql);
+            stmt.setString(1, aluno.getUsuario());
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                Materia m = new Materia(rs.getString("nome_materia"), rs.getInt("id_materia"));
+                materias.add(m);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProfessorMateriaDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            ConnectionFactory.closeConnection(con, stmt, rs);
+        }
+        return materias;
+    }
 }

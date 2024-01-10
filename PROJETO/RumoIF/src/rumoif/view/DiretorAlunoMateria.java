@@ -92,16 +92,21 @@ public class DiretorAlunoMateria extends javax.swing.JFrame {
                 Materia materia = materias.get(i);
                 rowData[2] = materia.getNome_materia();
             }
-            
+
             modelo.addRow(rowData);
         }
     }
+    
 
     private boolean materiaAlunoExiste(Materia m, String p) {
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
         ResultSet rs = null;
         boolean existe = false;
+        boolean existe2 = false;
+        if (m == null) {
+            return false;
+        }
         String sql = ("SELECT * FROM rumoif.materia WHERE nome_materia = ?");
         try {
             stmt = con.prepareStatement(sql);
@@ -115,13 +120,15 @@ public class DiretorAlunoMateria extends javax.swing.JFrame {
             Logger.getLogger(DiretorAlunoMateria.class.getName()).log(Level.SEVERE, null, ex);
         }
         sql = ("SELECT * FROM rumoif.login WHERE usuario = ?");
+        rs = null;
+        stmt = null;
         try {
             stmt = con.prepareStatement(sql);
             stmt.setString(1, p);
 
             rs = stmt.executeQuery();
-            if (!(rs.next())) {
-                existe = false;
+            if ((rs.next())) {
+                existe2 = true;
             }
         } catch (SQLException ex) {
             Logger.getLogger(DiretorAlunoMateria.class.getName()).log(Level.SEVERE, null, ex);
@@ -129,7 +136,7 @@ public class DiretorAlunoMateria extends javax.swing.JFrame {
             ConnectionFactory.closeConnection(con, stmt);
         }
 
-        return existe;
+        return existe & existe2;
     }
 
     private Materia obterMateria() {
@@ -141,6 +148,28 @@ public class DiretorAlunoMateria extends javax.swing.JFrame {
     private String obterAluno() {
         String professorRa = jtAluno.getText();
         return professorRa;
+    }
+
+    private boolean relacaoJaCriada(Materia m, String p) {
+        Connection con = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        String sql = ("SELECT * FROM rumoif.aluno_materia WHERE id_aluno = ? AND id_materia = ?");
+        boolean ja = false;
+        try {
+            stmt = con.prepareStatement(sql);
+            stmt.setString(1, p);
+            stmt.setInt(2, m.getId_materia());
+            rs = stmt.executeQuery();
+            if (rs.next()) {
+                ja = true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DiretorAlunoMateria.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            ConnectionFactory.closeConnection(con, stmt, rs);
+        }
+        return ja;
     }
 
     private void adicionarRelacao(Materia m, String p) {
@@ -159,14 +188,16 @@ public class DiretorAlunoMateria extends javax.swing.JFrame {
         }
 
     }
-    private void materia(){
-        Faltas f = new Faltas(obterAluno(),obterMateria());
+
+    private void materia() {
+        Faltas f = new Faltas(obterAluno(), obterMateria());
         FaltasDAO fDao = new FaltasDAO();
         fDao.create(f);
-        Notas n= new Notas(obterAluno(),obterMateria());
+        Notas n = new Notas(obterAluno(), obterMateria());
         NotasDAO nDao = new NotasDAO();
         nDao.create(n);
     }
+
     private void adicionar(Materia m, String p) {
         if (jtMateria.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Preencha o campo Matéria!");
@@ -175,8 +206,16 @@ public class DiretorAlunoMateria extends javax.swing.JFrame {
 
         } else if (materiaAlunoExiste(obterMateria(), obterAluno())) {
             materia();
-            adicionarRelacao(obterMateria(), obterAluno());
-            JOptionPane.showMessageDialog(null, "Aluno inserido na matéria","Aluno inserido",JOptionPane.QUESTION_MESSAGE);
+            if (relacaoJaCriada(m, p)) {
+                JOptionPane.showMessageDialog(null, "Aluno já está inserido na matéria", "Aluno inserido", JOptionPane.QUESTION_MESSAGE);
+            } else {
+                adicionarRelacao(obterMateria(), obterAluno());
+                JOptionPane.showMessageDialog(null, "Aluno inserido na matéria", "Aluno inserido", JOptionPane.QUESTION_MESSAGE);
+
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(null, "ERRO! Aluno ou Matéria não existem", "Aluno não inserido", JOptionPane.QUESTION_MESSAGE);
 
         }
         readJTable();

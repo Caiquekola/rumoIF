@@ -244,7 +244,7 @@ public class DiretorProfessorMateriaAdicionar extends javax.swing.JFrame {
         if(jtMateria.getText().isEmpty()){
             JOptionPane.showMessageDialog(null, "Preencha o campo Matéria!");
         }
-        else if(!(materiaExiste(m))){
+        else if(materiaExiste(m)){
             MateriaDAO mdao = new MateriaDAO();
             mdao.create(m);
             JOptionPane.showMessageDialog(null, "Matéria criada com êxito!");

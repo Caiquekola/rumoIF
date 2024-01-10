@@ -109,13 +109,12 @@ public class AlunoDAO implements GenericDAO<Aluno>{
         Aluno alunon = null;
         List<Aluno> alunos = new ArrayList<>();
         try {
-            stmt = con.prepareStatement("SELECT l.nome,l.usuario,l.email,l.senha FROM rumoif.login l JOIN rumoif.aluno_materia am ON l.usuario = am.id_aluno WHERE am.id_materia = ?");
+            stmt = con.prepareStatement("SELECT l.nome FROM rumoif.login l JOIN rumoif.notas n ON l.usuario = n.id_aluno WHERE n.id_materia = ?");
             stmt.setInt(1,m.getId_materia());
             rs = stmt.executeQuery();
 
             while (rs.next()) {
-                alunon = new Aluno(rs.getString("nome"), rs.getString("email"),
-                        rs.getString("usuario"), rs.getString("senha"));
+                alunon = new Aluno(rs.getString("nome"),null,null);
                 alunos.add(alunon);
             }
 
@@ -125,6 +124,28 @@ public class AlunoDAO implements GenericDAO<Aluno>{
             ConnectionFactory.closeConnection(con, stmt, rs);
         }
         return alunos;
+
+    }
+    public Aluno read(Aluno m) {
+        Connection con = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        Aluno alunon = null;
+        try {
+            stmt = con.prepareStatement("SELECT * FROM rumoif.login WHERE usuario = ?");
+            stmt.setString(1,m.getUsuario());
+            rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                alunon = new Aluno(rs.getString("nome"),rs.getString("email"),rs.getString("usuario"),rs.getString("senha"));
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(AlunoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            ConnectionFactory.closeConnection(con, stmt, rs);
+        }
+        return alunon;
 
     }
     public void update(Aluno a){
@@ -153,13 +174,26 @@ public class AlunoDAO implements GenericDAO<Aluno>{
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
         try {
+            String sql = "DELETE FROM rumoif.aluno_materia WHERE id_aluno = ?;";
+            stmt = con.prepareStatement(sql);
+            stmt.setString(1, a.getUsuario());
+            stmt.executeUpdate();
+            sql = "DELETE FROM rumoif.faltas WHERE id_aluno = ?;";
+            stmt = con.prepareStatement(sql);
+            stmt.setString(1, a.getUsuario());
+            stmt.executeUpdate();
+            sql = "DELETE FROM rumoif.notas WHERE id_aluno = ?;";
+            stmt = con.prepareStatement(sql);
+            stmt.setString(1, a.getUsuario());
+            stmt.executeUpdate();
             //String sql = "DELETE FROM rumoif.login WHERE nome = '"+a.getNome()+"' AND email = '"+a.getEmail()+"' AND usuario = '"+a.getUsuario()+"';";
-            String sql = "DELETE FROM rumoif.login WHERE nome = ? AND email = ? OR usuario = ? AND nivel = 0;";
+            sql = "DELETE FROM rumoif.login WHERE nome = ? AND email = ? OR usuario = ?;";
             stmt = con.prepareStatement(sql);
             stmt.setString(1, a.getNome());
             stmt.setString(2,a.getEmail());
             stmt.setString(3, a.getUsuario());
             stmt.executeUpdate();
+            
         } catch (SQLException ex) {
             Logger.getLogger(AlunoDAO.class.getName()).log(Level.SEVERE, null, ex);
         }finally{

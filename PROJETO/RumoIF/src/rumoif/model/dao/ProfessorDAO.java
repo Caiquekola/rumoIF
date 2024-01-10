@@ -107,12 +107,18 @@ public class ProfessorDAO implements GenericDAO<Professor>{
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
         try {
-            String sql = ("DELETE FROM rumoif.login WHERE usuario = ? OR nome = ? AND email = ?");
+            String sql = "DELETE FROM rumoif.professor_materia WHERE id_professor = ?;";
             stmt = con.prepareStatement(sql);
             stmt.setString(1, p.getUsuario());
-            stmt.setString(2, p.getNome());
-            stmt.setString(3, p.getEmail());
             stmt.executeUpdate();
+            //String sql = "DELETE FROM rumoif.login WHERE nome = '"+a.getNome()+"' AND email = '"+a.getEmail()+"' AND usuario = '"+a.getUsuario()+"';";
+            sql = "DELETE FROM rumoif.login WHERE nome = ? AND email = ? OR usuario = ?;";
+            stmt = con.prepareStatement(sql);
+            stmt.setString(1, p.getNome());
+            stmt.setString(2,p.getEmail());
+            stmt.setString(3, p.getUsuario());
+            stmt.executeUpdate();
+             
 
         } catch (SQLException ex) {
             Logger.getLogger(ProfessorDAO.class.getName()).log(Level.SEVERE, null, ex);

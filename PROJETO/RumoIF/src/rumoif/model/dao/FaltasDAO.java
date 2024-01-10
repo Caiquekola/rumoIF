@@ -48,6 +48,7 @@ public class FaltasDAO implements GenericDAO<Faltas>{
         PreparedStatement stmt = null;
         ResultSet rs = null;
         Boolean certo = false;
+        Boolean certo2 = false;
         int quantidade = 0;
         //Pegar a quantidade de faltas
         String sql = ("SELECT * FROM rumoif.faltas WHERE id_aluno = ? AND id_materia = ?");
@@ -68,6 +69,41 @@ public class FaltasDAO implements GenericDAO<Faltas>{
         try {
             stmt = con.prepareStatement(sql);
             stmt.setInt(1, quantidade+1);
+            stmt.setString(2,aluno);
+            stmt.setInt(3, m.getId_materia());
+            stmt.executeUpdate();
+            certo2 = true;
+        } catch (SQLException ex) {
+            Logger.getLogger(FaltasDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally{
+            ConnectionFactory.closeConnection(con, stmt, rs);
+        }
+        return certo;
+    }public boolean diminuirFalta(String aluno, Materia m){
+        Connection con = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        Boolean certo = false;
+        int quantidade = 0;
+        //Pegar a quantidade de faltas
+        String sql = ("SELECT * FROM rumoif.faltas WHERE id_aluno = ? AND id_materia = ?");
+        try {
+            stmt = con.prepareStatement(sql);
+            stmt.setString(1, aluno);
+            stmt.setInt(2,m.getId_materia());
+            rs = stmt.executeQuery();
+            if (rs.next()) {
+                quantidade = rs.getInt("quantidade");
+                certo = true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(FaltasDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        
+        sql = ("UPDATE rumoif.faltas SET quantidade = ? WHERE id_aluno = ? AND id_materia = ?;");
+        try {
+            stmt = con.prepareStatement(sql);
+            stmt.setInt(1, quantidade-1);
             stmt.setString(2,aluno);
             stmt.setInt(3, m.getId_materia());
             stmt.executeUpdate();
@@ -111,7 +147,7 @@ public class FaltasDAO implements GenericDAO<Faltas>{
             stmt.setInt(1, m.getId_materia());
             rs = stmt.executeQuery();
             while (rs.next()) {
-                Faltas f = new Faltas(rs.getString("id_aluno"), rs.getInt("quantidade"));
+                Faltas f = new Faltas(rs.getString("id_aluno"),rs.getInt("id_materia"), rs.getInt("quantidade"));
                 faltas.add(f);
             }
         } catch (SQLException ex) {

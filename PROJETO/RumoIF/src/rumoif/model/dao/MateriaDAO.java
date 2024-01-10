@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import rumoif.model.bean.Professor;
+import rumoif.model.bean.Aluno;
 
 public class MateriaDAO implements GenericDAO<Materia>{
 
@@ -76,7 +76,31 @@ public class MateriaDAO implements GenericDAO<Materia>{
         }
         return materias;
     }
-    
+    public List<Materia> read(Aluno a) {
+        Connection con = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        List<Materia> materias = new ArrayList<Materia>();
+        String sql = ("SELECT * "
+                + "FROM rumoif.materia m "
+                + "JOIN rumoif.aluno_materia am "
+                + "ON m.id_materia = am.id_materia "
+                + "WHERE am.id_aluno = ?");
+        try {
+            stmt = con.prepareStatement(sql);
+            stmt.setString(1, a.getUsuario());
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                Materia m = new Materia(rs.getString("nome_materia"), rs.getInt("id_materia"));
+                materias.add(m);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProfessorMateriaDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            ConnectionFactory.closeConnection(con, stmt, rs);
+        }
+        return materias;
+    }
     public void update(Materia m) {
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;

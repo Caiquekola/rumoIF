@@ -14,8 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-import rumoif.model.bean.Professor;
-import rumoif.model.dao.ProfessorDAO;
+
 
 /**
  *
@@ -133,7 +132,7 @@ public class Login extends javax.swing.JFrame {
                 switch (login.loginUsuario(this)) {
                     case 0:
                         this.dispose();
-                        AlunoS a = new AlunoS();
+                        AlunoMateria a = new AlunoMateria(login.nomeAluno(this));
                         a.setVisible(true);
                         break;
                     case 1:

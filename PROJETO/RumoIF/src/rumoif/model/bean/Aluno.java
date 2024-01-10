@@ -17,5 +17,9 @@ public class Aluno extends Usuario{
         super(nome,email,usuario);
         this.setNivel(0);
     }
-    
+    //Tela de Login passando Aluno para frente
+    public Aluno(String usuario, String senha){
+        super(usuario,senha);
+        this.setNivel(0);
+    }
 }

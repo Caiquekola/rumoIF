@@ -74,7 +74,7 @@ public class NotasDAO implements GenericDAO<Notas>{
         PreparedStatement stmt = null;
         ResultSet rs = null;
         Boolean certo = false;
-        int quantidade = 0;
+        double notaNova = 0;
         //Pegar a quantidade de notas
         String sql = ("SELECT * FROM rumoif.notas WHERE id_aluno = ? AND id_materia = ?");
         try {
@@ -83,7 +83,7 @@ public class NotasDAO implements GenericDAO<Notas>{
             stmt.setInt(2,m.getId_materia());
             rs = stmt.executeQuery();
             if (rs.next()) {
-                quantidade = rs.getInt("quantidade");
+                notaNova = rs.getInt("nota");
                 certo = true;
             }
         } catch (SQLException ex) {
@@ -93,7 +93,7 @@ public class NotasDAO implements GenericDAO<Notas>{
         sql = ("UPDATE rumoif.notas SET nota = ? WHERE id_aluno = ? AND id_materia = ?;");
         try {
             stmt = con.prepareStatement(sql);
-            stmt.setInt(1, (int) (quantidade+(nota)));
+            stmt.setInt(1, (int) (notaNova+(nota)));
             stmt.setString(2,aluno);
             stmt.setInt(3, m.getId_materia());
             stmt.executeUpdate();
@@ -110,7 +110,7 @@ public class NotasDAO implements GenericDAO<Notas>{
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        String sql = ("SELECT * FROM rumoif.notas, rumoif.login WHERE id_aluno = ?");
+        String sql = ("SELECT * FROM rumoif.notas WHERE id_aluno = ?");
         List<Notas> notas = new ArrayList<Notas>();
         try {
             stmt = con.prepareStatement(sql);

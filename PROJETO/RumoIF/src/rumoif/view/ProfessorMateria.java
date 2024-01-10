@@ -10,7 +10,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,9 +26,7 @@ import rumoif.model.bean.Professor;
 import rumoif.model.dao.AlunoDAO;
 import rumoif.model.dao.AlunoMateriaDAO;
 import rumoif.model.dao.FaltasDAO;
-import rumoif.model.dao.MateriaDAO;
 import rumoif.model.dao.NotasDAO;
-import rumoif.model.dao.ProfessorDAO;
 
 /**
  *
@@ -50,21 +47,7 @@ public class ProfessorMateria extends javax.swing.JFrame {
         this.jNomeProfessor.setText(p.getNome());
         this.jlNomeMateria.setText(materia.getNome_materia());
 
-        jtNota.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                }
-            }
-        });
-        jtAluno.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-
-                }
-            }
-        });
+        
 
         DefaultTableModel modelo = (DefaultTableModel) jtTabela.getModel();
         jtTabela.setRowSorter(new TableRowSorter(modelo));
@@ -91,22 +74,22 @@ public class ProfessorMateria extends javax.swing.JFrame {
         for (int i = 0; i < maxSize; i++) {
             Object[] rowData = new Object[5];
             //ID ALUNO ATIVIDADE NOTA FALTA
-           
+
             if (i < alunos.size()) {
+                Notas nota = notas.get(i);
+                Faltas falta = faltas.get(i);
                 Aluno aluno = alunos.get(i);
-                rowData[0] = aluno.getUsuario();
+                rowData[0] = nota.getId_aluno();
                 rowData[1] = aluno.getNome();
+                rowData[2] = String.valueOf(nota.getNota());
+                rowData[3] = String.valueOf(falta.getQuantidade());
+
             }
-            
 
             if (i < notas.size()) {
-                Notas nota = notas.get(i);
-                rowData[2] = String.valueOf(nota.getNota());
             }
 
             if (i < faltas.size()) {
-                Faltas falta = faltas.get(i);
-                rowData[3] = String.valueOf(falta.getQuantidade());
             }
 
             modelo.addRow(rowData); // Adiciona a linha ao modelo da tabela
@@ -114,14 +97,12 @@ public class ProfessorMateria extends javax.swing.JFrame {
 
     }
 
-   
-
     private boolean AlunoExiste(String p) {
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
         ResultSet rs = null;
         boolean existe = false;
-        String sql = ("SELECT * FROM rumoif.login WHERE usuario = ?");
+        String sql = ("SELECT * FROM rumoif.notas WHERE id_aluno = ?");
         try {
             stmt = con.prepareStatement(sql);
             stmt.setString(1, p);
@@ -140,25 +121,30 @@ public class ProfessorMateria extends javax.swing.JFrame {
     }
 
     private String obterAluno() {
-        String professorRa = jtAluno.getText();
-        return professorRa;
+        String alunoRA = jtIDAluno.getText();
+        return alunoRA;
     }
 
     private double obterNota() {
-        double nota = Double.parseDouble(jtNota.getText());
+        double nota = 0;
+        if(jtNota.getText().isEmpty()){
+            return 0;
+        }else{
+           nota = Double.parseDouble(jtNota.getText());
+        }
         return nota;
     }
 
     private void adicionarNota() {
-        if (jtAluno.getText().isEmpty()) {
+        if (obterAluno().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Preencha o campo Aluno!");
-        } else if (jtNota.getText().isEmpty()) {
+        } else if (obterNota()<=0) {
             JOptionPane.showMessageDialog(null, "Preencha o campo Nota!");
 
-        } else if (AlunoExiste(jtAluno.getText())) {
+        } else if (AlunoExiste(obterAluno())) {
             NotasDAO notasDao = new NotasDAO();
             if (notasDao.acrescentarNota(obterAluno(), obterNota(), materia)) {
-                JOptionPane.showMessageDialog(null, "Aluno inserido na matéria", "Aluno inserido", JOptionPane.QUESTION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Nota inserida com êxito!", "Nota inserida", JOptionPane.QUESTION_MESSAGE);
 
             }
 
@@ -167,22 +153,32 @@ public class ProfessorMateria extends javax.swing.JFrame {
     }
 
     private void adicionarFalta() {
-        if (jtAluno.getText().isEmpty()) {
+        if (obterAluno().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Preencha o campo Aluno!");
-        } else if (jtNota.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Preencha o campo Nota!");
-
-        } else if (AlunoExiste(jtAluno.getText())) {
+        }  else if (AlunoExiste(obterAluno())) {
             FaltasDAO faltasDao = new FaltasDAO();
             if (faltasDao.acrescentarFalta(obterAluno(), materia)) {
-                JOptionPane.showMessageDialog(null, "Aluno inserido na matéria", "Aluno inserido", JOptionPane.QUESTION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falta inserida com êxito", "Falta inserido", JOptionPane.QUESTION_MESSAGE);
 
             }
 
         }
         readJTable();
     }
+    private void removerFalta() {
+        if (obterAluno().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Preencha o campo Aluno!");
+        } 
+        else if (AlunoExiste(obterAluno())) {
+            FaltasDAO faltasDao = new FaltasDAO();
+            if (faltasDao.diminuirFalta(obterAluno(), materia)) {
+                JOptionPane.showMessageDialog(null, "Falta inserida com êxito", "Falta inserido", JOptionPane.QUESTION_MESSAGE);
 
+            }
+
+        }
+        readJTable();
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -199,7 +195,7 @@ public class ProfessorMateria extends javax.swing.JFrame {
         EditarNota = new javax.swing.JButton();
         AdicionarNota = new javax.swing.JButton();
         AdicionarFalta1 = new javax.swing.JButton();
-        jtAluno = new javax.swing.JTextField();
+        jtIDAluno = new javax.swing.JTextField();
         jlNomeMateria = new javax.swing.JLabel();
         jNomeProfessor = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -212,7 +208,7 @@ public class ProfessorMateria extends javax.swing.JFrame {
 
         Aluno.setFont(new java.awt.Font("League Spartan Black", 1, 36)); // NOI18N
         Aluno.setForeground(new java.awt.Color(102, 102, 102));
-        Aluno.setText("Aluno");
+        Aluno.setText("ID Aluno");
         getContentPane().add(Aluno, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 250, -1, -1));
 
         jtNota.setBackground(new java.awt.Color(0, 0, 0));
@@ -224,39 +220,42 @@ public class ProfessorMateria extends javax.swing.JFrame {
         Nota.setText("Nota");
         getContentPane().add(Nota, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 340, -1, -1));
 
-        EditarNota.setBackground(new java.awt.Color(102, 102, 102));
-        EditarNota.setFont(new java.awt.Font("League Spartan", 0, 14)); // NOI18N
+        EditarNota.setBackground(new java.awt.Color(204, 204, 204));
+        EditarNota.setFont(new java.awt.Font("League Spartan", 0, 18)); // NOI18N
+        EditarNota.setForeground(new java.awt.Color(51, 51, 51));
         EditarNota.setText("Editar Nota");
         EditarNota.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 EditarNotaActionPerformed(evt);
             }
         });
-        getContentPane().add(EditarNota, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 720, 140, 30));
+        getContentPane().add(EditarNota, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 670, 140, 30));
 
-        AdicionarNota.setBackground(new java.awt.Color(102, 102, 102));
-        AdicionarNota.setFont(new java.awt.Font("League Spartan", 0, 14)); // NOI18N
+        AdicionarNota.setBackground(new java.awt.Color(204, 204, 204));
+        AdicionarNota.setFont(new java.awt.Font("League Spartan", 0, 18)); // NOI18N
+        AdicionarNota.setForeground(new java.awt.Color(51, 51, 51));
         AdicionarNota.setText("Adicionar Nota");
         AdicionarNota.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 AdicionarNotaActionPerformed(evt);
             }
         });
-        getContentPane().add(AdicionarNota, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 670, 140, 30));
+        getContentPane().add(AdicionarNota, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 670, 140, 30));
 
-        AdicionarFalta1.setBackground(new java.awt.Color(102, 102, 102));
-        AdicionarFalta1.setFont(new java.awt.Font("League Spartan", 0, 14)); // NOI18N
+        AdicionarFalta1.setBackground(new java.awt.Color(204, 204, 204));
+        AdicionarFalta1.setFont(new java.awt.Font("League Spartan", 0, 18)); // NOI18N
+        AdicionarFalta1.setForeground(new java.awt.Color(51, 51, 51));
         AdicionarFalta1.setText("Adicionar Falta");
         AdicionarFalta1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 AdicionarFalta1ActionPerformed(evt);
             }
         });
-        getContentPane().add(AdicionarFalta1, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 670, 150, 30));
+        getContentPane().add(AdicionarFalta1, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 670, 150, 30));
 
-        jtAluno.setBackground(new java.awt.Color(0, 0, 0));
-        jtAluno.setForeground(new java.awt.Color(255, 255, 255));
-        getContentPane().add(jtAluno, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 280, 270, 40));
+        jtIDAluno.setBackground(new java.awt.Color(0, 0, 0));
+        jtIDAluno.setForeground(new java.awt.Color(255, 255, 255));
+        getContentPane().add(jtIDAluno, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 280, 270, 40));
 
         jlNomeMateria.setFont(new java.awt.Font("League Spartan ExtraBold", 0, 36)); // NOI18N
         jlNomeMateria.setForeground(new java.awt.Color(255, 153, 102));
@@ -329,7 +328,7 @@ public class ProfessorMateria extends javax.swing.JFrame {
 
     private void EditarNotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditarNotaActionPerformed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_EditarNotaActionPerformed
 
     private void jtTabelaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtTabelaMouseClicked
@@ -392,7 +391,7 @@ public class ProfessorMateria extends javax.swing.JFrame {
     private javax.swing.JLabel jNomeProfessor;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel jlNomeMateria;
-    private javax.swing.JTextField jtAluno;
+    private javax.swing.JTextField jtIDAluno;
     private javax.swing.JTextField jtNota;
     private javax.swing.JTable jtTabela;
     private javax.swing.JButton jvoltar;

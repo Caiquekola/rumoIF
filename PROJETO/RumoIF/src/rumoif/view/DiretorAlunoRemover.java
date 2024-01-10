@@ -314,7 +314,7 @@ public class DiretorAlunoRemover extends javax.swing.JFrame {
 
     private Aluno obterAluno() {
             
-            Aluno a = new Aluno(jtNome.getText().substring(0, 6), jtEmail.getText(), jtUsuario.getText());
+            Aluno a = new Aluno(jtNome.getText(), jtEmail.getText(), jtUsuario.getText());
             return a;
         
     }
